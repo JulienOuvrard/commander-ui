@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DrinksService } from '../services/drinks.service';
+import { Drink } from '../models/drink.model';
 
 @Component({
   selector: 'cmdr-drinks',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DrinksComponent implements OnInit {
 
-  constructor() { }
+  drinks: Drink[];
+  constructor(private drinkService: DrinksService) { }
 
   ngOnInit() {
+    this.getDrinks();
+  }
+
+  getDrinks() {
+    this.drinkService.getDrinks().subscribe(drinks => this.drinks = drinks);
+  }
+
+  editDrink(drinkId: string) {
+    console.log(drinkId);
+  }
+
+  deleteDrink(drinkId: string) {
+    this.drinkService.deleteDrink(drinkId).subscribe(deleted => {
+      console.log(deleted);
+      this.getDrinks();
+    });
   }
 
 }

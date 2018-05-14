@@ -9,6 +9,8 @@ import { MealsComponent } from './meals/meals.component';
 import { CommandsComponent } from './commands/commands.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DrinksService } from './services/drinks.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,9 +24,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DrinksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

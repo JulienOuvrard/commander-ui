@@ -1,5 +1,26 @@
 <main>
-  <p>
-    drinks works!
-  </p>
+  <div class="container">
+    <h1>Drinks Page</h1>
+      <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let drink of drinks; let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{drink.name}}</td>
+              <td>{{drink.price}}</td>
+              <td>
+                <button type="button" class="btn btn-info" (click)="editDrink(drink._id)"><i class="fa fa-edit"></i></button>
+                <button type="button" class="btn btn-danger" (click)="deleteDrink(drink._id)"><i class="fa fa-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
 </main>
