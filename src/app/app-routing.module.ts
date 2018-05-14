@@ -5,6 +5,7 @@ import { MealsComponent } from './meals/meals.component';
 import { FoodsComponent } from './foods/foods.component';
 import { HomeComponent } from './home/home.component';
 import { CommandsComponent } from './commands/commands.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'commands',
     component: CommandsComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   },
   {
     path: '',
