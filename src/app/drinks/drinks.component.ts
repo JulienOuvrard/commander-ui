@@ -10,6 +10,8 @@ import { Drink } from '../models/drink.model';
 export class DrinksComponent implements OnInit {
 
   drinks: Drink[];
+  isEditing: boolean;
+  editDrinkBody: Drink;
   constructor(private drinkService: DrinksService) { }
 
   ngOnInit() {
@@ -17,11 +19,32 @@ export class DrinksComponent implements OnInit {
   }
 
   getDrinks() {
-    this.drinkService.getDrinks().subscribe(drinks => this.drinks = drinks);
+    this.drinkService.getDrinks().subscribe(drinks => {
+      this.isEditing = false;
+      this.drinks = drinks;
+    });
   }
 
-  editDrink(drinkId: string) {
-    console.log(drinkId);
+  addDrink() {
+    console.log('ToggleNew');
+  }
+
+  editDrink(index) {
+    console.log('ToggleEditing');
+    this.isEditing = true;
+    this.editDrinkBody = this.drinks[index];
+  }
+
+  cancelEditing() {
+    console.log('ToggleEditing');
+    this.isEditing = false;
+  }
+
+  saveEditedDrink(drinkId: string) {
+    this.drinkService.updateDrink(drinkId, this.editDrinkBody).subscribe(oldDrink => {
+      console.log(oldDrink);
+      this.getDrinks();
+    });
   }
 
   deleteDrink(drinkId: string) {
