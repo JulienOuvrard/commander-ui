@@ -52,6 +52,23 @@
             </ng-container>
           </td>
         </tr>
+        <tr *ngIf="isAdding">
+            <th scope="row">{{drinks.length+1}}</th>
+            <td>
+                <input [(ngModel)]="newDrinkBody.name">
+            </td>
+            <td>
+                  <input [(ngModel)]="newDrinkBody.price">
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" (click)="saveNewDrink()">
+                  <i class="fa fa-save"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="cancelAdding()">
+                  <i class="fa fa-ban"></i>
+                </button>
+            </td>
+        </tr>
       </tbody>
     </table>
   </div>

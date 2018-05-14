@@ -11,7 +11,9 @@ export class DrinksComponent implements OnInit {
 
   drinks: Drink[];
   isEditing: boolean;
+  isAdding: boolean;
   editDrinkBody: Drink;
+  newDrinkBody: Drink;
   constructor(private drinkService: DrinksService) { }
 
   ngOnInit() {
@@ -21,12 +23,28 @@ export class DrinksComponent implements OnInit {
   getDrinks() {
     this.drinkService.getDrinks().subscribe(drinks => {
       this.isEditing = false;
+      this.isAdding = false;
+      this.newDrinkBody = null;
       this.drinks = drinks;
     });
   }
 
   addDrink() {
     console.log('ToggleNew');
+    this.isAdding = true;
+    this.newDrinkBody = {name: '', price: 0, quantity: 1};
+  }
+
+  cancelAdding() {
+    console.log('ToggleNew');
+    this.isAdding = false;
+    this.newDrinkBody = null;
+  }
+
+  saveNewDrink() {
+    this.drinkService.saveDrink(this.newDrinkBody).subscribe(data => {
+      this.getDrinks();
+    });
   }
 
   editDrink(index) {
@@ -38,6 +56,7 @@ export class DrinksComponent implements OnInit {
   cancelEditing() {
     console.log('ToggleEditing');
     this.isEditing = false;
+    this.editDrinkBody = null;
   }
 
   saveEditedDrink(drinkId: string) {
