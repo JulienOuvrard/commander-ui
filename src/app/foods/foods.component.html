@@ -1,5 +1,75 @@
 <main>
-  <p>
-    foods works!
-  </p>
+  <div class="container">
+    <h1>Foods Page</h1>
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">
+            <button type="button" class="btn btn-success" (click)="addFood()">
+              <i class="fa fa-plus"></i>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let food of foods; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>
+            <ng-container *ngIf="!isEditing">
+              {{food.name}}
+            </ng-container>
+            <ng-container *ngIf="isEditing">
+              <input [(ngModel)]="editFoodBody.name">
+            </ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="!isEditing">
+              {{food.price}}
+            </ng-container>
+            <ng-container *ngIf="isEditing">
+                <input [(ngModel)]="editFoodBody.price">
+            </ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="!isEditing">
+              <button type="button" class="btn btn-info" (click)="editFood(i)">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-danger" (click)="deleteFood(food._id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="isEditing">
+              <button type="button" class="btn btn-success" (click)="saveEditedFood(food._id)">
+                <i class="fa fa-save"></i>
+              </button>
+              <button type="button" class="btn btn-danger" (click)="cancelEditing()">
+                <i class="fa fa-ban"></i>
+              </button>
+            </ng-container>
+          </td>
+        </tr>
+        <tr *ngIf="isAdding">
+            <th scope="row">{{foods.length+1}}</th>
+            <td>
+                <input [(ngModel)]="newFoodBody.name">
+            </td>
+            <td>
+                  <input [(ngModel)]="newFoodBody.price">
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" (click)="saveNewFood()">
+                  <i class="fa fa-save"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="cancelAdding()">
+                  <i class="fa fa-ban"></i>
+                </button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </main>

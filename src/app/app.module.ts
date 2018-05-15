@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DrinksService } from './services/drinks.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { FoodsService } from './services/foods.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [DrinksService],
+  providers: [DrinksService, FoodsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
