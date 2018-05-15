@@ -43,6 +43,23 @@ export class CommandDetailComponent implements OnInit {
     this.commandsService.getCommand(commandId).subscribe(command => this.commandBody = command);
   }
 
+  saveCommand() {
+    this.commandsService.saveCommand(this.commandBody).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  updateCommand() {
+    this.commandBody.updated = new Date();
+    this.commandsService.updateCommand(this.commandId, this.commandBody).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  payCommand() {
+    this.commandBody.isPaid = true;
+  }
+
   goBack() {
     this.router.navigate(['commands']);
   }

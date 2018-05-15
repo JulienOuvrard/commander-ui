@@ -3,6 +3,16 @@
         <div class="container">
             <button (click)="goBack()">Back</button>
             <h1>NEW COMMAND</h1>
+            <form (ngSubmit)="saveCommand()" #commandBodyForm="ngForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="commandBody.name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" [disabled]="!commandBodyForm.form.valid">Save</button>
+                </div>
+            </form>
         </div>
     </main>
 </ng-container>
@@ -10,7 +20,17 @@
     <main>
         <div class="container">
             <button (click)="goBack()">Back</button>
-            <h1>EDIT COMMAND</h1>
+            <h1>EDIT COMMAND</h1> <button (click)="payCommand()">Pay</button>
+            <form (ngSubmit)="updateCommand()" #commandBodyForm="ngForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="commandBody.name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" [disabled]="!commandBodyForm.form.valid">Save</button>
+                </div>
+            </form>
         </div>
     </main>
 </ng-container>
