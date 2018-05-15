@@ -7,8 +7,9 @@
           <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Price</th>
+          <th scope="col">Updated</th>
           <th scope="col">
-            <button type="button" class="btn btn-success" (click)="addDrink()">
+            <button type="button" class="btn btn-success" (click)="addDrink()" [attr.disabled]="isAdding || null">
               <i class="fa fa-plus"></i>
             </button>
           </th>
@@ -30,15 +31,18 @@
               {{drink.price}}
             </ng-container>
             <ng-container *ngIf="isEditing">
-                <input [(ngModel)]="editDrinkBody.price">
+              <input [(ngModel)]="editDrinkBody.price">
             </ng-container>
           </td>
           <td>
+            {{drink.updated | date}}
+          </td>
+          <td>
             <ng-container *ngIf="!isEditing">
-              <button type="button" class="btn btn-info" (click)="editDrink(i)">
+              <button type="button" class="btn btn-info" (click)="editDrink(i)" [attr.disabled]="isAdding || null">
                 <i class="fa fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-danger" (click)="deleteDrink(drink._id)">
+              <button type="button" class="btn btn-danger" (click)="deleteDrink(drink._id)" [attr.disabled]="isAdding || null">
                 <i class="fa fa-trash"></i>
               </button>
             </ng-container>
@@ -53,21 +57,24 @@
           </td>
         </tr>
         <tr *ngIf="isAdding">
-            <th scope="row">{{drinks.length+1}}</th>
-            <td>
-                <input [(ngModel)]="newDrinkBody.name">
-            </td>
-            <td>
-                  <input [(ngModel)]="newDrinkBody.price">
-            </td>
-            <td>
-                <button type="button" class="btn btn-success" (click)="saveNewDrink()">
-                  <i class="fa fa-save"></i>
-                </button>
-                <button type="button" class="btn btn-danger" (click)="cancelAdding()">
-                  <i class="fa fa-ban"></i>
-                </button>
-            </td>
+          <th scope="row">{{drinks.length+1}}</th>
+          <td>
+            <input [(ngModel)]="newDrinkBody.name">
+          </td>
+          <td>
+            <input [(ngModel)]="newDrinkBody.price">
+          </td>
+          <td>
+            {{newDrinkBody.created | date}}
+          </td>
+          <td>
+            <button type="button" class="btn btn-success" (click)="saveNewDrink()">
+              <i class="fa fa-save"></i>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="cancelAdding()">
+              <i class="fa fa-ban"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -4,4 +4,6 @@ export interface Food {
     quantity: number;
     price: number;
     currency?: string;
+    created: Date;
+    updated?: Date;
 }

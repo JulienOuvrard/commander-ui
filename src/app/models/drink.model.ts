@@ -4,4 +4,6 @@ export interface Drink {
     quantity: number;
     price: number;
     currency?: string;
+    created: Date;
+    updated?: Date;
 }

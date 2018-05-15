@@ -32,7 +32,8 @@ export class FoodsComponent implements OnInit {
   addFood() {
     console.log('ToggleNew');
     this.isAdding = true;
-    this.newFoodBody = {name: '', price: 0, quantity: 1};
+    const date = new Date();
+    this.newFoodBody = {name: '', price: 0, quantity: 1, created: date, updated: date};
   }
 
   cancelAdding() {
@@ -60,6 +61,7 @@ export class FoodsComponent implements OnInit {
   }
 
   saveEditedFood(FoodId: string) {
+    this.editFoodBody.updated = new Date();
     this.FoodService.updateFood(FoodId, this.editFoodBody).subscribe(oldFood => {
       console.log(oldFood);
       this.getFoods();
