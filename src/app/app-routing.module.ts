@@ -6,6 +6,7 @@ import { FoodsComponent } from './foods/foods.component';
 import { HomeComponent } from './home/home.component';
 import { CommandsComponent } from './commands/commands.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CommandDetailComponent } from './command-detail/command-detail.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,14 @@ const routes: Routes = [
   {
     path: 'commands',
     component: CommandsComponent
+  },
+  {
+    path: 'commands/add',
+    component: CommandDetailComponent
+  },
+  {
+    path: 'commands/:id',
+    component: CommandDetailComponent
   },
   {
     path: 'dashboard',

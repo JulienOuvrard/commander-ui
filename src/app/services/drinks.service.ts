@@ -15,10 +15,15 @@ export class DrinksService {
     return this.http.get<Drink[]>(this.apiUrl);
   }
 
+  getDrink(drinkId: string): Observable<Drink> {
+    return this.http.get<Drink>(`${this.apiUrl}/${drinkId}`);
+  }
+
   saveDrink(body: Drink): Observable<any> {
     return this.http.post(this.apiUrl, body);
   }
-   updateDrink(drinkId: string, body: Drink): Observable<Drink> {
+
+  updateDrink(drinkId: string, body: Drink): Observable<Drink> {
     return this.http.put<Drink>(`${this.apiUrl}/${drinkId}`, body);
   }
 

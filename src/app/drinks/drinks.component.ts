@@ -30,14 +30,12 @@ export class DrinksComponent implements OnInit {
   }
 
   addDrink() {
-    console.log('ToggleNew');
     this.isAdding = true;
     const date = new Date();
-    this.newDrinkBody = {name: '', price: 0, quantity: 1, created: date, updated: date};
+    this.newDrinkBody = {name: null, price: 0, quantity: 1, created: date, updated: date};
   }
 
   cancelAdding() {
-    console.log('ToggleNew');
     this.isAdding = false;
     this.newDrinkBody = null;
   }
@@ -49,13 +47,11 @@ export class DrinksComponent implements OnInit {
   }
 
   editDrink(index) {
-    console.log('ToggleEditing');
     this.isEditing = true;
     this.editDrinkBody = this.drinks[index];
   }
 
   cancelEditing() {
-    console.log('ToggleEditing');
     this.isEditing = false;
     this.editDrinkBody = null;
   }

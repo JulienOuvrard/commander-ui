@@ -1,0 +1,16 @@
+<ng-container *ngIf="isNew">
+    <main>
+        <div class="container">
+            <button (click)="goBack()">Back</button>
+            <h1>NEW COMMAND</h1>
+        </div>
+    </main>
+</ng-container>
+<ng-container *ngIf="!isNew">
+    <main>
+        <div class="container">
+            <button (click)="goBack()">Back</button>
+            <h1>EDIT COMMAND</h1>
+        </div>
+    </main>
+</ng-container>

@@ -15,14 +15,19 @@ export class FoodsService {
     return this.http.get<Food[]>(this.apiUrl);
   }
 
+  getFood(foodId: string): Observable<Food> {
+    return this.http.get<Food>(`${this.apiUrl}/${foodId}`);
+  }
+
   saveFood(body: Food): Observable<any> {
     return this.http.post(this.apiUrl, body);
   }
-   updateFood(FoodId: string, body: Food): Observable<Food> {
-    return this.http.put<Food>(`${this.apiUrl}/${FoodId}`, body);
+
+  updateFood(foodId: string, body: Food): Observable<Food> {
+    return this.http.put<Food>(`${this.apiUrl}/${foodId}`, body);
   }
 
-  deleteFood(FoodId: string): Observable<Food> {
-    return this.http.delete<Food>(`${this.apiUrl}/${FoodId}`);
+  deleteFood(foodId: string): Observable<Food> {
+    return this.http.delete<Food>(`${this.apiUrl}/${foodId}`);
   }
 }

@@ -13,6 +13,8 @@ import { DrinksService } from './services/drinks.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FoodsService } from './services/foods.service';
+import { CommandDetailComponent } from './command-detail/command-detail.component';
+import { CommandsService } from './services/commands.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { FoodsService } from './services/foods.service';
     MealsComponent,
     CommandsComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    CommandDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,7 @@ import { FoodsService } from './services/foods.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [DrinksService, FoodsService],
+  providers: [DrinksService, FoodsService, CommandsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
