@@ -29,6 +29,7 @@ export class CommandDetailComponent implements OnInit {
         name: null,
         price: 0,
         drinks: [],
+        rounds: [],
         meals: [],
         isPaid: false,
         created: date,
@@ -54,10 +55,6 @@ export class CommandDetailComponent implements OnInit {
     this.commandsService.updateCommand(this.commandId, this.commandBody).subscribe(res => {
       console.log(res);
     });
-  }
-
-  payCommand() {
-    this.commandBody.isPaid = true;
   }
 
   goBack() {

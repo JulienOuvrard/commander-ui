@@ -3,6 +3,7 @@ export interface Command {
     name: string;
     price: number;
     drinks: string[];
+    rounds: string[];
     meals: string[];
     isPaid: boolean;
     created: Date;

@@ -1,14 +1,28 @@
 <ng-container *ngIf="isNew">
     <main>
         <div class="container">
-            <button (click)="goBack()">Back</button>
+            <button class="btn btn-info" (click)="goBack()">Back</button>
             <h1>NEW COMMAND</h1>
             <form (ngSubmit)="saveCommand()" #commandBodyForm="ngForm">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" [(ngModel)]="commandBody.name" name="name" required>
                 </div>
-
+                <div class="form-group">
+                    <label for="name">Drinks</label>
+                    <button class="btn btn-info">+</button>
+                    <cmdr-drink-choice></cmdr-drink-choice>
+                </div>
+                <div class="form-group">
+                    <label for="name">Rounds</label>
+                    <button class="btn btn-info">+</button>
+                    <cmdr-drink-choice></cmdr-drink-choice>
+                </div>
+                <div class="form-group">
+                    <label for="name">Meals</label>
+                    <button class="btn btn-info">+</button>
+                    <cmdr-food-choice></cmdr-food-choice>
+                </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" [disabled]="!commandBodyForm.form.valid">Save</button>
                 </div>
@@ -19,9 +33,16 @@
 <ng-container *ngIf="!isNew">
     <main>
         <div class="container">
-            <button (click)="goBack()">Back</button>
-            <h1>EDIT COMMAND</h1> <button (click)="payCommand()">Pay</button>
-            <form (ngSubmit)="updateCommand()" #commandBodyForm="ngForm">
+            <button class="btn btn-info" (click)="goBack()">Back</button>
+            <h1>EDIT COMMAND</h1>
+            <form (ngSubmit)="updateCommand()" #commandBodyForm="ngForm" *ngIf="commandBody">
+                <div class="form-group">
+                    <span class="switch">
+                        <input type="checkbox" class="form-control switch" name="isPaid" id="isPaid" [(ngModel)]="commandBody.isPaid">
+                        <label for="isPaid">Paid</label>
+                    </span>
+                </div>
+
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" [(ngModel)]="commandBody.name" name="name" required>
