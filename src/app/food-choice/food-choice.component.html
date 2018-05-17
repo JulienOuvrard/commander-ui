@@ -1,10 +1,32 @@
-<div class="container">
-  <div class="card-deck">
-      <div class="card bg-light" *ngFor="let food of foods" (click)="foodSelection(food._id)">
-          <div class="card-body text-center">
-              <h5 class="card-title">{{food.name}}</h5>
-              <p class="card-text">{{food.price | currency:food.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
-          </div>
-      </div>
-  </div>
+<div class="container" [hidden]="!visible">
+    <div class="btn-group" role="group" aria-label="Actions">
+        <button type="button" class="btn btn-secondary" (click)="saveSelection()">Ok</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelSelection()">Cancel</button>
+    </div>
+    <div class="card-deck">
+        <div class="card bg-light" *ngFor="let food of foods" (click)="foodSelection(food)">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{food.name}}</h5>
+                <p class="card-text">{{food.price | currency:food.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
+                <ng-container *ngIf="food.needCooking">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="cooking" id="inlineCheckbox1" value="B">
+                        <label class="form-check-label" for="inlineCheckbox1">Bleu</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="cooking" id="inlineCheckbox2" value="S">
+                        <label class="form-check-label" for="inlineCheckbox1">Saignant</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="cooking" id="inlineCheckbox3" value="AP">
+                        <label class="form-check-label" for="inlineCheckbox1">A Point</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="cooking" id="inlineCheckbox4" value="BC">
+                        <label class="form-check-label" for="inlineCheckbox2">Bien Cuit</label>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
 </div>

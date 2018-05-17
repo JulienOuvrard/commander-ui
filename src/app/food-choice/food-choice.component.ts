@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Food } from '../models/food.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Food, FoodSelection } from '../models/food.model';
 import { FoodsService } from '../services/foods.service';
 
 @Component({
@@ -10,6 +10,11 @@ import { FoodsService } from '../services/foods.service';
 export class FoodChoiceComponent implements OnInit {
 
   foods: Food[];
+  selection: FoodSelection[];
+  @Input() visible: Boolean;
+  @Output() visibleChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
+  @Output() foodsSelection: EventEmitter<any> = new EventEmitter<any>();
   constructor(private foodService: FoodsService) { }
 
   ngOnInit() {
@@ -22,8 +27,23 @@ export class FoodChoiceComponent implements OnInit {
     });
   }
 
-  foodSelection(foodId: string) {
-    console.log('selection', foodId);
+  foodSelection(food: Food) {
+    this.selection.push({ food: food._id});
+  }
+
+  saveSelection() {
+    if (this.selection[0]) {
+      this.foodsSelection.emit(this.selection);
+    } else {
+      this.foodsSelection.emit(null);
+    }
+  }
+
+  cancelSelection() {
+    this.visible = false;
+    this.visibleChange.emit(this.visible);
+    this.selection = [];
+    this.foodsSelection.emit(null);
   }
 
 }

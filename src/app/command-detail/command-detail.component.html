@@ -1,7 +1,9 @@
 <ng-container *ngIf="isNew">
     <main>
         <div class="container">
-            <button class="btn btn-info" (click)="goBack()">Back</button>
+            <button class="btn btn-info" (click)="goBack()">
+                <i class="fa fa-arrow-left"></i>Back
+            </button>
             <h1>NEW COMMAND</h1>
             <form (ngSubmit)="saveCommand()" #commandBodyForm="ngForm">
                 <div class="form-group">
@@ -10,18 +12,24 @@
                 </div>
                 <div class="form-group">
                     <label for="name">Drinks</label>
-                    <button class="btn btn-info">+</button>
-                    <cmdr-drink-choice></cmdr-drink-choice>
+                    <button type="button" class="btn btn-info" (click)="drinkVisibility = true">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <cmdr-drink-choice [(visible)]="drinkVisibility"></cmdr-drink-choice>
                 </div>
                 <div class="form-group">
                     <label for="name">Rounds</label>
-                    <button class="btn btn-info">+</button>
-                    <cmdr-drink-choice></cmdr-drink-choice>
+                    <button type="button" class="btn btn-info" (click)="roundVisibility = true">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <cmdr-drink-choice [(visible)]="roundVisibility"></cmdr-drink-choice>
                 </div>
                 <div class="form-group">
                     <label for="name">Meals</label>
-                    <button class="btn btn-info">+</button>
-                    <cmdr-food-choice></cmdr-food-choice>
+                    <button type="button" class="btn btn-info" (click)="foodVisibility = true">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <cmdr-food-choice [(visible)]="foodVisibility"></cmdr-food-choice>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" [disabled]="!commandBodyForm.form.valid">Save</button>
@@ -33,7 +41,9 @@
 <ng-container *ngIf="!isNew">
     <main>
         <div class="container">
-            <button class="btn btn-info" (click)="goBack()">Back</button>
+            <button class="btn btn-info" (click)="goBack()">
+                <i class="fa fa-arrow-left"></i>Back
+            </button>
             <h1>EDIT COMMAND</h1>
             <form (ngSubmit)="updateCommand()" #commandBodyForm="ngForm" *ngIf="commandBody">
                 <div class="form-group">
@@ -48,6 +58,29 @@
                     <input type="text" class="form-control" [(ngModel)]="commandBody.name" name="name" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="name">Drinks</label>
+                    <button type="button" class="btn btn-info" (click)="drinkVisibility = true">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <cmdr-drink-choice [(visible)]="drinkVisibility"></cmdr-drink-choice>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Rounds</label>
+                    <button type="button" class="btn btn-info" (click)="roundVisibility = true">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <cmdr-drink-choice [(visible)]="roundVisibility"></cmdr-drink-choice>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Meals</label>
+                    <button type="button" class="btn btn-info" (click)="foodVisibility = true">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <cmdr-food-choice [(visible)]="foodVisibility"></cmdr-food-choice>
+                </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" [disabled]="!commandBodyForm.form.valid">Save</button>
                 </div>

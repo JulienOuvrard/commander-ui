@@ -1,3 +1,8 @@
+export interface DrinkSelection {
+    drink: String;
+    quantity: Number;
+}
+
 export interface Drink {
     _id?: string;
     name: string;
