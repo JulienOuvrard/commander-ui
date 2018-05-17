@@ -15,6 +15,12 @@ import { FormsModule } from '@angular/forms';
 import { FoodsService } from './services/foods.service';
 import { CommandDetailComponent } from './command-detail/command-detail.component';
 import { CommandsService } from './services/commands.service';
+import { DrinkChoiceComponent } from './drink-choice/drink-choice.component';
+import { FoodChoiceComponent } from './food-choice/food-choice.component';
+import { registerLocaleData } from '@angular/common';
+
+import localefr from '@angular/common/locales/fr';
+registerLocaleData(localefr);
 
 @NgModule({
   declarations: [
@@ -25,7 +31,9 @@ import { CommandsService } from './services/commands.service';
     CommandsComponent,
     HomeComponent,
     DashboardComponent,
-    CommandDetailComponent
+    CommandDetailComponent,
+    DrinkChoiceComponent,
+    FoodChoiceComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="card-deck">
+        <div class="card bg-light" *ngFor="let drink of drinks" (click)="drinkSelection(drink._id)">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{drink.name}}</h5>
+                <p class="card-text">{{drink.price | currency:drink.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
+            </div>
+        </div>
+    </div>
+</div>
