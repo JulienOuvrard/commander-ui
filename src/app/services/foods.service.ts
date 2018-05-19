@@ -43,4 +43,8 @@ export class FoodsService {
   saveFoodSelection(body: Meal): Observable<any> {
     return this.http.post(this.apiMealUrl, body);
   }
+
+  getMeal(mealId: string): Observable<Meal> {
+    return this.http.get<Meal>(`${this.apiMealUrl}/${mealId}`);
+  }
 }

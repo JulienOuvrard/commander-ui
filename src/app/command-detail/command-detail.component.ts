@@ -4,6 +4,8 @@ import { Command } from '../models/command.model';
 import { CommandsService } from '../services/commands.service';
 import { DrinkSelection } from '../models/drink.model';
 import { FoodSelection } from '../models/food.model';
+import { DrinksService } from '../services/drinks.service';
+import { FoodsService } from '../services/foods.service';
 
 @Component({
   selector: 'cmdr-command-detail',
@@ -15,8 +17,10 @@ export class CommandDetailComponent implements OnInit {
   commandId: string;
   isNew: boolean;
   commandBody: Command;
+  commandDetails: any[];
 
-  constructor(private router: Router, public route: ActivatedRoute, private commandsService: CommandsService) {
+  constructor(private router: Router, public route: ActivatedRoute, private commandsService: CommandsService,
+    private drinkService: DrinksService, private foodService: FoodsService) {
     this.route.params.subscribe(params => {
       this.commandId = params['id'];
       this.isNew = this.commandId === '' || this.commandId === undefined || this.commandId === null;
@@ -36,6 +40,7 @@ export class CommandDetailComponent implements OnInit {
         created: date,
         updated: date
       };
+      this.commandDetails = [];
     } else {
       this.getCommand(this.commandId);
     }
@@ -70,13 +75,31 @@ export class CommandDetailComponent implements OnInit {
 
   roundSelection(selection: string) {
     if (selection !== null) {
-      this.commandBody.rounds.push(selection);
+      this.drinkService.getRound(selection).subscribe(round => {
+        const detailStr = round.drinks.map(curr => {
+          return `(${curr.quantity}) ${curr.name}`;
+        }).join(', ');
+        this.commandDetails.push({id: round._id, type: 'round', price: round.price, detail: detailStr});
+        this.commandBody.rounds.push(selection);
+        this.commandBody.price += round.price;
+      });
     }
   }
 
   mealSelection(selection: string) {
     if (selection !== null) {
-      this.commandBody.meals.push(selection);
+      this.foodService.getMeal(selection).subscribe(meal => {
+        const detailStr = meal.foods.map(curr => {
+          return curr.name;
+        }).join(', ');
+        this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, detail: detailStr});
+        this.commandBody.meals.push(selection);
+        this.commandBody.price += meal.price;
+      });
     }
+  }
+
+  getCommandDetail(): any[] {
+    return [];
   }
 }

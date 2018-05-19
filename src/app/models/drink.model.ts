@@ -1,5 +1,6 @@
 export interface DrinkSelection {
     drink: string;
+    name: string;
     quantity: number;
 }
 

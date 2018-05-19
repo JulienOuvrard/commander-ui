@@ -42,7 +42,7 @@ export class DrinkChoiceComponent implements OnInit {
     if (d !== -1) {
       this.selection[d].quantity = this.selection[d].quantity.valueOf() + 1;
     } else {
-      this.selection.push({ drink: drink._id, quantity: 1 });
+      this.selection.push({ drink: drink._id, name: drink.name, quantity: 1 });
     }
     this.price += drink.price;
   }

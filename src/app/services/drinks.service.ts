@@ -43,4 +43,8 @@ export class DrinksService {
   saveDrinkSelection(body: Round): Observable<any> {
     return this.http.post(this.apiRoundUrl, body);
   }
+
+  getRound(roundId: string): Observable<Round> {
+    return this.http.get<Round>(`${this.apiRoundUrl}/${roundId}`);
+  }
 }

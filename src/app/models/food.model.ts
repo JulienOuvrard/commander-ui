@@ -1,5 +1,6 @@
 export interface FoodSelection {
     food: string;
+    name: string;
     cooking?: string;
     options?: string[];
 }

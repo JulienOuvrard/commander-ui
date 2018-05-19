@@ -37,7 +37,7 @@ export class FoodChoiceComponent implements OnInit {
   }
 
   foodSelection(food: Food) {
-    this.selection.push({ food: food._id});
+    this.selection.push({ food: food._id, name: food.name });
     this.price += food.price;
   }
 
