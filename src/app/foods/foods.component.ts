@@ -14,14 +14,16 @@ export class FoodsComponent implements OnInit {
   isAdding: boolean;
   editFoodBody: Food;
   newFoodBody: Food;
-  constructor(private FoodService: FoodsService) { }
+  uploadFile: File;
+
+  constructor(private foodService: FoodsService) { }
 
   ngOnInit() {
     this.getFoods();
   }
 
   getFoods() {
-    this.FoodService.getFoods().subscribe(foods => {
+    this.foodService.getFoods().subscribe(foods => {
       this.isEditing = false;
       this.isAdding = false;
       this.newFoodBody = null;
@@ -41,7 +43,7 @@ export class FoodsComponent implements OnInit {
   }
 
   saveNewFood() {
-    this.FoodService.saveFood(this.newFoodBody).subscribe(data => {
+    this.foodService.saveFood(this.newFoodBody).subscribe(data => {
       this.getFoods();
     });
   }
@@ -58,15 +60,25 @@ export class FoodsComponent implements OnInit {
 
   saveEditedFood(FoodId: string) {
     this.editFoodBody.updated = new Date();
-    this.FoodService.updateFood(FoodId, this.editFoodBody).subscribe(oldFood => {
+    this.foodService.updateFood(FoodId, this.editFoodBody).subscribe(oldFood => {
       console.log(oldFood);
       this.getFoods();
     });
   }
 
   deleteFood(FoodId: string) {
-    this.FoodService.deleteFood(FoodId).subscribe(deleted => {
+    this.foodService.deleteFood(FoodId).subscribe(deleted => {
       console.log(deleted);
+      this.getFoods();
+    });
+  }
+
+  changeUploadFile(files: FileList) {
+    this.uploadFile = files.item(0);
+  }
+
+  uploadFoods() {
+    this.foodService.importFoods(this.uploadFile).subscribe(success => {
       this.getFoods();
     });
   }

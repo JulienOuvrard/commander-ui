@@ -14,6 +14,8 @@ export class DrinksComponent implements OnInit {
   isAdding: boolean;
   editDrinkBody: Drink;
   newDrinkBody: Drink;
+  uploadFile: File;
+
   constructor(private drinkService: DrinksService) { }
 
   ngOnInit() {
@@ -67,6 +69,16 @@ export class DrinksComponent implements OnInit {
   deleteDrink(drinkId: string) {
     this.drinkService.deleteDrink(drinkId).subscribe(deleted => {
       console.log(deleted);
+      this.getDrinks();
+    });
+  }
+
+  changeUploadFile(files: FileList) {
+    this.uploadFile = files.item(0);
+  }
+
+  uploadDrinks() {
+    this.drinkService.importDrinks(this.uploadFile).subscribe(success => {
       this.getDrinks();
     });
   }

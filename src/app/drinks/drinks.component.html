@@ -1,6 +1,15 @@
 <main>
   <div class="container">
     <h1>Drinks Page</h1>
+    <form (ngSubmit)="uploadDrinks()" #importDrinkForm="ngForm">
+        <div class="form-group">
+            <label for="file">File</label>
+            <input type="file" class="form-control" ngModel (change)="changeUploadFile($event.target.files)" name="file" required accept="*.csv">
+        </div>
+      <div class="form-group">
+          <button type="submit" class="btn btn-success">Upload</button>
+      </div>
+    </form>
     <table class="table table-hover">
       <thead class="thead-dark">
         <tr>

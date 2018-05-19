@@ -30,4 +30,11 @@ export class DrinksService {
   deleteDrink(drinkId: string): Observable<Drink> {
     return this.http.delete<Drink>(`${this.apiUrl}/${drinkId}`);
   }
+
+  importDrinks(file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http.post(`${this.apiUrl}/import`, formData);
+  }
 }
