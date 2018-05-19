@@ -79,6 +79,7 @@ export class DrinksComponent implements OnInit {
 
   uploadDrinks() {
     this.drinkService.importDrinks(this.uploadFile).subscribe(success => {
+      this.uploadFile = null;
       this.getDrinks();
     });
   }
