@@ -11,24 +11,33 @@
                     <input type="text" class="form-control" [(ngModel)]="commandBody.name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="name">Drinks</label>
-                    <button type="button" class="btn btn-info" (click)="drinkVisibility = true">
-                        <i class="fa fa-plus"></i>
-                    </button>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link btn" [ngClass]="{'btn-outline-secondary': !drinkVisibility, 'btn-info': drinkVisibility}"
+                                (click)="drinkVisibility = true">
+                                Drinks
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link btn" [ngClass]="{'btn-outline-secondary': !roundVisibility, 'btn-info': roundVisibility}"
+                                (click)="roundVisibility = true">
+                                Rounds
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link btn" [ngClass]="{'btn-outline-secondary': !foodVisibility, 'btn-info': foodVisibility}"
+                                (click)="foodVisibility = true">
+                                Meals
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group">
                     <cmdr-drink-choice [(visible)]="drinkVisibility" (drinksSelection)="drinkSelection($event)"></cmdr-drink-choice>
-                </div>
-                <div class="form-group">
-                    <label for="name">Rounds</label>
-                    <button type="button" class="btn btn-info" (click)="roundVisibility = true">
-                        <i class="fa fa-plus"></i>
-                    </button>
                     <cmdr-drink-choice [(visible)]="roundVisibility" (drinksSelection)="roundSelection($event)"></cmdr-drink-choice>
-                </div>
-                <div class="form-group">
-                    <label for="name">Meals</label>
-                    <button type="button" class="btn btn-info" (click)="foodVisibility = true">
-                        <i class="fa fa-plus"></i>
-                    </button>
                     <cmdr-food-choice [(visible)]="foodVisibility" (foodsSelection)="mealSelection($event)"></cmdr-food-choice>
                 </div>
                 <div class="form-group">
