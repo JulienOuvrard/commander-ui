@@ -15,21 +15,21 @@
                     <button type="button" class="btn btn-info" (click)="drinkVisibility = true">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <cmdr-drink-choice [(visible)]="drinkVisibility"></cmdr-drink-choice>
+                    <cmdr-drink-choice [(visible)]="drinkVisibility" (drinksSelection)="drinkSelection($event)"></cmdr-drink-choice>
                 </div>
                 <div class="form-group">
                     <label for="name">Rounds</label>
                     <button type="button" class="btn btn-info" (click)="roundVisibility = true">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <cmdr-drink-choice [(visible)]="roundVisibility"></cmdr-drink-choice>
+                    <cmdr-drink-choice [(visible)]="roundVisibility" (drinksSelection)="roundSelection($event)"></cmdr-drink-choice>
                 </div>
                 <div class="form-group">
                     <label for="name">Meals</label>
                     <button type="button" class="btn btn-info" (click)="foodVisibility = true">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <cmdr-food-choice [(visible)]="foodVisibility"></cmdr-food-choice>
+                    <cmdr-food-choice [(visible)]="foodVisibility" (foodsSelection)="mealSelection($event)"></cmdr-food-choice>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" [disabled]="!commandBodyForm.form.valid">Save</button>

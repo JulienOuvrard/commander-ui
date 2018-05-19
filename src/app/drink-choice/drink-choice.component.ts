@@ -11,10 +11,11 @@ export class DrinkChoiceComponent implements OnInit {
 
   drinks: Drink[];
   selection: DrinkSelection[];
+  price: number;
   @Input() visible: Boolean;
   @Output() visibleChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
-  @Output() drinksSelection: EventEmitter<any> = new EventEmitter<any>();
+  @Output() drinksSelection: EventEmitter<String> = new EventEmitter<String>();
 
   constructor(private drinkService: DrinksService) { }
 
@@ -26,7 +27,14 @@ export class DrinkChoiceComponent implements OnInit {
     this.drinkService.getDrinks().subscribe(drinks => {
       this.drinks = drinks;
       this.selection = [];
+      this.price = 0;
     });
+  }
+
+  getQuantity(drink: Drink): number {
+    const d = this.selection.find(v => v.drink === drink._id);
+
+    return d ? d.quantity : 0;
   }
 
   drinkSelection(drink: Drink) {
@@ -36,20 +44,36 @@ export class DrinkChoiceComponent implements OnInit {
     } else {
       this.selection.push({ drink: drink._id, quantity: 1 });
     }
+    this.price += drink.price;
   }
 
   saveSelection() {
     if (this.selection[0]) {
-      this.drinksSelection.emit(this.selection);
+      const drinks = this.selection,
+      price = this.price,
+      date = new Date();
+      this.drinkService.saveDrinkSelection({drinks, price, created: date, updated: date}).subscribe(res => {
+        this.closeSelector();
+        this.drinksSelection.emit(res._id);
+      });
     } else {
-      this.drinksSelection.emit(null);
+      this.cancelSelection();
     }
   }
 
-  cancelSelection() {
+  closeSelector() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
-    this.selection = [];
+  }
+
+  cancelSelection() {
+    this.resetSelection();
+    this.closeSelector();
     this.drinksSelection.emit(null);
+  }
+
+  resetSelection() {
+    this.selection = [];
+    this.price = 0;
   }
 }

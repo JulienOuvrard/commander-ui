@@ -1,6 +1,6 @@
 export interface DrinkSelection {
-    drink: String;
-    quantity: Number;
+    drink: string;
+    quantity: number;
 }
 
 export interface Drink {

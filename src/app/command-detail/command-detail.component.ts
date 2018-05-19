@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Command } from '../models/command.model';
 import { CommandsService } from '../services/commands.service';
-import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
+import { DrinkSelection } from '../models/drink.model';
+import { FoodSelection } from '../models/food.model';
 
 @Component({
   selector: 'cmdr-command-detail',
@@ -59,5 +60,23 @@ export class CommandDetailComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['commands']);
+  }
+
+  drinkSelection(selection: string) {
+    if (selection !== null) {
+      this.commandBody.drinks.push(selection);
+    }
+  }
+
+  roundSelection(selection: string) {
+    if (selection !== null) {
+      this.commandBody.rounds.push(selection);
+    }
+  }
+
+  mealSelection(selection: string) {
+    if (selection !== null) {
+      this.commandBody.meals.push(selection);
+    }
   }
 }

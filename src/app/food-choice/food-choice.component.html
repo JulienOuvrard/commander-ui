@@ -1,12 +1,24 @@
 <div class="container" [hidden]="!visible">
-    <div class="btn-group" role="group" aria-label="Actions">
-        <button type="button" class="btn btn-secondary" (click)="saveSelection()">Ok</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelSelection()">Cancel</button>
+    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Foods toolbar">
+        <div class="btn-group" role="group" aria-label="Actions">
+            <button type="button" class="btn btn-secondary" (click)="saveSelection()">Ok</button>
+            <button type="button" class="btn btn-secondary" (click)="resetSelection()">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelSelection()">Cancel</button>
+        </div>
+        <div class="input-group">
+            <input type="text" readonly class="form-control" aria-label="food price" aria-describedby="btnGroupAddon2"
+                value="{{price | number:'1.2-3':'fr'}}">
+            <div class="input-group-append">
+                <span class="input-group-text" id="btnGroupAddon2">€</span>
+            </div>
+        </div>
     </div>
     <div class="card-deck">
         <div class="card bg-light" *ngFor="let food of foods" (click)="foodSelection(food)">
             <div class="card-body text-center">
-                <h5 class="card-title">{{food.name}}</h5>
+                <h5 class="card-title">{{food.name}}
+                    <span class="badge badge-pill badge-primary" *ngIf="getQuantity(food)"><i class="fa fa-check"></i></span>
+                </h5>
                 <p class="card-text">{{food.price | currency:food.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
                 <ng-container *ngIf="food.needCooking">
                     <div class="form-check form-check-inline">

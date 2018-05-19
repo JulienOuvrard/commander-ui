@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Drink } from '../models/drink.model';
+import { Round } from '../models/round.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DrinksService {
   private apiUrl = 'http://localhost:3000/api/drinks';
+  private apiRoundUrl = 'http://localhost:3000/api/rounds';
 
   constructor(private http: HttpClient) { }
 
@@ -36,5 +38,9 @@ export class DrinksService {
     formData.append('file', file, file.name);
 
     return this.http.post(`${this.apiUrl}/import`, formData);
+  }
+
+  saveDrinkSelection(body: Round): Observable<any> {
+    return this.http.post(this.apiRoundUrl, body);
   }
 }

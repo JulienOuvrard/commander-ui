@@ -1,7 +1,7 @@
 export interface FoodSelection {
-    food: String;
-    cooking?: String;
-    options?: String[];
+    food: string;
+    cooking?: string;
+    options?: string[];
 }
 
 export interface Food {
