@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Command } from '../models/command.model';
+import { Command, CommandDetail } from '../models/command.model';
 import { CommandsService } from '../services/commands.service';
 import { DrinkSelection } from '../models/drink.model';
 import { FoodSelection } from '../models/food.model';
@@ -17,7 +17,7 @@ export class CommandDetailComponent implements OnInit {
   commandId: string;
   isNew: boolean;
   commandBody: Command;
-  commandDetails: any[];
+  commandDetails: CommandDetail[];
 
   constructor(private router: Router, public route: ActivatedRoute, private commandsService: CommandsService,
     private drinkService: DrinksService, private foodService: FoodsService) {
@@ -46,7 +46,10 @@ export class CommandDetailComponent implements OnInit {
   }
 
   getCommand(commandId: string) {
-    this.commandsService.getCommand(commandId).subscribe(command => this.commandBody = command);
+    this.commandsService.getCommand(commandId).subscribe(command => {
+      this.commandBody = command;
+      this.getCommandDetail(command);
+    });
   }
 
   saveCommand() {
@@ -72,7 +75,7 @@ export class CommandDetailComponent implements OnInit {
         const detailStr = round.drinks.map(curr => {
           return `(${curr.quantity}) ${curr.name}`;
         }).join(', ');
-        this.commandDetails.push({id: round._id, type: 'round', price: round.price, detail: detailStr});
+        this.commandDetails.push({id: round._id, type: 'round', price: round.price, paid: round.isPaid, detail: detailStr});
         this.commandBody.rounds.push(selection);
         this.commandBody.price += round.price;
       });
@@ -85,14 +88,30 @@ export class CommandDetailComponent implements OnInit {
         const detailStr = meal.foods.map(curr => {
           return curr.name;
         }).join(', ');
-        this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, detail: detailStr});
+        this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr});
         this.commandBody.meals.push(selection);
         this.commandBody.price += meal.price;
       });
     }
   }
 
-  getCommandDetail(): any[] {
-    return [];
+  getCommandDetail(command: Command) {
+    this.commandDetails = [];
+    command.meals.forEach(mealId => {
+      this.foodService.getMeal(mealId).subscribe(meal => {
+        const detailStr = meal.foods.map(curr => {
+          return curr.name;
+        }).join(', ');
+        this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr});
+      });
+    });
+    command.rounds.forEach(roundId => {
+      this.drinkService.getRound(roundId).subscribe(round => {
+        const detailStr = round.drinks.map(curr => {
+          return `(${curr.quantity}) ${curr.name}`;
+        }).join(', ');
+        this.commandDetails.push({id: round._id, type: 'round', price: round.price, paid: round.isPaid, detail: detailStr});
+      });
+    });
   }
 }

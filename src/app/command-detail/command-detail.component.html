@@ -68,6 +68,15 @@
                 </div>
 
                 <div class="form-group">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let cmdDetail of commandDetails">
+                            {{cmdDetail.detail}} {{cmdDetail.price | number:'1.2-3':'fr'}}
+                        </li>
+                    </ul>
+                    <span>Total: {{commandBody.price}}</span>
+                </div>
+
+                <div class="form-group">
                     <ul class="nav nav-pills">
                         <li class="nav-item">
                             <button type="button" class="nav-link btn" [ngClass]="{'btn-outline-secondary': !roundVisibility, 'btn-info': roundVisibility}"
