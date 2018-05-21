@@ -11,16 +11,34 @@
                     <input type="text" class="form-control" [(ngModel)]="commandBody.name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetails">
-                            <span class="command-detail">{{cmdDetail.detail | titlecase}}</span>
-                            <span class="command-price">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="card">
+                        <div class="card-header">
+                            Rounds
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetailGroupBy.round">
+                                <span class="command-detail">{{cmdDetail.detail | titlecase}}</span>
+                                <span class="command-price">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Meals
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetailGroupBy.meal">
+                                <span class="command-detail">{{cmdDetail.detail | titlecase}}</span>
+                                <span class="command-price">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <span class="command-detail">Total</span>
                             <span class="command-price">{{commandBody.price | number:'1.2-3':'fr'}}</span>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <ul class="nav nav-pills">
@@ -66,18 +84,42 @@
                 </div>
 
                 <div class="form-group">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetails">
-                            <span class="command-detail">{{cmdDetail.detail | titlecase}}</span>
-                            <span class="command-price">
-                                <span class="command-price-number">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
-                                <span class="switch switch-sm">
-                                    <input type="checkbox" class="form-control switch" name="{{cmdDetail.id}}_isPaid" id="{{cmdDetail.id}}_isPaid" [(ngModel)]="cmdDetail.paid">
-                                    <label for="{{cmdDetail.id}}_isPaid"></label>
+                    <div class="card">
+                        <div class="card-header">
+                            Rounds
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetailGroupBy.round">
+                                <span class="command-detail">{{cmdDetail.detail | titlecase}}</span>
+                                <span class="command-price">
+                                    <span class="command-price-number">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
+                                    <span class="switch switch-sm">
+                                        <input type="checkbox" class="form-control switch" name="{{cmdDetail.id}}_isPaid" id="{{cmdDetail.id}}_isPaid" [(ngModel)]="cmdDetail.paid">
+                                        <label for="{{cmdDetail.id}}_isPaid"></label>
+                                    </span>
                                 </span>
-                            </span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Meals
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetailGroupBy.meal">
+                                <span class="command-detail">{{cmdDetail.detail | titlecase}}</span>
+                                <span class="command-price">
+                                    <span class="command-price-number">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
+                                    <span class="switch switch-sm">
+                                        <input type="checkbox" class="form-control switch" name="{{cmdDetail.id}}_isPaid" id="{{cmdDetail.id}}_isPaid" [(ngModel)]="cmdDetail.paid">
+                                        <label for="{{cmdDetail.id}}_isPaid"></label>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <span class="command-detail">Total</span>
                             <span class="command-price">
                                 <span class="command-price-number">{{commandBody.price | number:'1.2-3':'fr'}}</span>
@@ -86,8 +128,8 @@
                                     <label for="isPaid"></label>
                                 </span>
                             </span>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">

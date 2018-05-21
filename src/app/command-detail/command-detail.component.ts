@@ -18,6 +18,7 @@ export class CommandDetailComponent implements OnInit {
   isNew: boolean;
   commandBody: Command;
   commandDetails: CommandDetail[];
+  commandDetailGroupBy: {[s: string]: CommandDetail[]};
 
   constructor(private router: Router, public route: ActivatedRoute, private commandsService: CommandsService,
     private drinkService: DrinksService, private foodService: FoodsService) {
@@ -40,6 +41,10 @@ export class CommandDetailComponent implements OnInit {
         updated: date
       };
       this.commandDetails = [];
+      this.commandDetailGroupBy = {
+        round: [],
+        meal: []
+      };
     } else {
       this.getCommand(this.commandId);
     }
@@ -77,7 +82,9 @@ export class CommandDetailComponent implements OnInit {
         const detailStr = round.drinks.map(curr => {
           return `(${curr.quantity}) ${curr.name}`;
         }).join(', ');
-        this.commandDetails.push({id: round._id, type: 'round', price: round.price, paid: round.isPaid, detail: detailStr});
+        const detail = {id: round._id, type: 'round', price: round.price, paid: round.isPaid, detail: detailStr};
+        this.commandDetails.push(detail);
+        this.commandDetailGroupBy['round'].push(detail);
         this.commandBody.rounds.push(selection);
         this.commandBody.price += round.price;
       });
@@ -90,7 +97,9 @@ export class CommandDetailComponent implements OnInit {
         const detailStr = meal.foods.map(curr => {
           return `(${curr.quantity}) ${curr.name} ${curr.cooking ? `[${curr.cooking}]` : ``}`;
         }).join(', ');
-        this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr});
+        const detail = {id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr};
+        this.commandDetails.push(detail);
+        this.commandDetailGroupBy['meal'].push(detail);
         this.commandBody.meals.push(selection);
         this.commandBody.price += meal.price;
       });
@@ -99,12 +108,18 @@ export class CommandDetailComponent implements OnInit {
 
   getCommandDetail(command: Command) {
     this.commandDetails = [];
+    this.commandDetailGroupBy = {
+      round: [],
+      meal: []
+    };
     command.meals.forEach(mealId => {
       this.foodService.getMeal(mealId).subscribe(meal => {
         const detailStr = meal.foods.map(curr => {
           return `(${curr.quantity}) ${curr.name} ${curr.cooking ? `[${curr.cooking}]` : ``}`;
         }).join(', ');
-        this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr});
+        const detail = {id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr};
+        this.commandDetails.push(detail);
+        this.commandDetailGroupBy['meal'].push(detail);
       });
     });
     command.rounds.forEach(roundId => {
@@ -112,7 +127,9 @@ export class CommandDetailComponent implements OnInit {
         const detailStr = round.drinks.map(curr => {
           return `(${curr.quantity}) ${curr.name}`;
         }).join(', ');
-        this.commandDetails.push({id: round._id, type: 'round', price: round.price, paid: round.isPaid, detail: detailStr});
+        const detail = {id: round._id, type: 'round', price: round.price, paid: round.isPaid, detail: detailStr};
+        this.commandDetails.push(detail);
+        this.commandDetailGroupBy['round'].push(detail);
       });
     });
   }
