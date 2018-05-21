@@ -10,7 +10,8 @@ import { FoodsService } from '../services/foods.service';
 export class FoodsComponent implements OnInit {
 
   foods: Food[];
-  isEditing: boolean;
+  editingMode: boolean;
+  editingIndex: number;
   isAdding: boolean;
   editFoodBody: Food;
   newFoodBody: Food;
@@ -24,9 +25,10 @@ export class FoodsComponent implements OnInit {
 
   getFoods() {
     this.foodService.getFoods().subscribe(foods => {
-      this.isEditing = false;
+      this.editingMode = false;
       this.isAdding = false;
       this.newFoodBody = null;
+      this.editingIndex = null;
       this.foods = foods;
     });
   }
@@ -48,14 +50,20 @@ export class FoodsComponent implements OnInit {
     });
   }
 
-  editFood(index) {
-    this.isEditing = true;
+  editFood(index: number) {
+    this.editingMode = true;
+    this.editingIndex = index;
     this.editFoodBody = this.foods[index];
   }
 
   cancelEditing() {
-    this.isEditing = false;
+    this.editingMode = false;
     this.editFoodBody = null;
+    this.editingIndex = null;
+  }
+
+  isEditing(index: number): boolean {
+    return this.editingMode && this.editingIndex === index;
   }
 
   saveEditedFood(FoodId: string) {

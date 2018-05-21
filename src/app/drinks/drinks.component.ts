@@ -10,7 +10,8 @@ import { Drink } from '../models/drink.model';
 export class DrinksComponent implements OnInit {
 
   drinks: Drink[];
-  isEditing: boolean;
+  editingMode: boolean;
+  editingIndex: number;
   isAdding: boolean;
   editDrinkBody: Drink;
   newDrinkBody: Drink;
@@ -24,9 +25,10 @@ export class DrinksComponent implements OnInit {
 
   getDrinks() {
     this.drinkService.getDrinks().subscribe(drinks => {
-      this.isEditing = false;
+      this.editingMode = false;
       this.isAdding = false;
       this.newDrinkBody = null;
+      this.editingIndex = null;
       this.drinks = drinks;
     });
   }
@@ -48,14 +50,20 @@ export class DrinksComponent implements OnInit {
     });
   }
 
-  editDrink(index) {
-    this.isEditing = true;
+  editDrink(index: number) {
+    this.editingMode = true;
+    this.editingIndex = index;
     this.editDrinkBody = this.drinks[index];
   }
 
   cancelEditing() {
-    this.isEditing = false;
+    this.editingMode = false;
     this.editDrinkBody = null;
+    this.editingIndex = null;
+  }
+
+  isEditing(index: number): boolean {
+    return this.editingMode && this.editingIndex === index;
   }
 
   saveEditedDrink(drinkId: string) {

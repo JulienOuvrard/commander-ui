@@ -23,7 +23,7 @@
           <th scope="col">Price</th>
           <th scope="col">Updated</th>
           <th scope="col">
-            <button type="button" class="btn btn-success" (click)="addDrink()" [attr.disabled]="isAdding || null">
+            <button type="button" class="btn btn-success" (click)="addDrink()" [attr.disabled]="isAdding || editingMode || null">
               <i class="fa fa-plus"></i>
             </button>
           </th>
@@ -33,18 +33,18 @@
         <tr *ngFor="let drink of drinks; let i = index">
           <th scope="row">{{i+1}}</th>
           <td>
-            <ng-container *ngIf="!isEditing">
+            <ng-container *ngIf="!isEditing(i)">
               {{drink.name}}
             </ng-container>
-            <ng-container *ngIf="isEditing">
+            <ng-container *ngIf="isEditing(i)">
               <input [(ngModel)]="editDrinkBody.name">
             </ng-container>
           </td>
           <td>
-            <ng-container *ngIf="!isEditing">
+            <ng-container *ngIf="!isEditing(i)">
               {{drink.price}}
             </ng-container>
-            <ng-container *ngIf="isEditing">
+            <ng-container *ngIf="isEditing(i)">
               <input [(ngModel)]="editDrinkBody.price">
             </ng-container>
           </td>
@@ -52,15 +52,15 @@
             {{drink.updated | date:'medium':'':'fr'}}
           </td>
           <td>
-            <ng-container *ngIf="!isEditing">
-              <button type="button" class="btn btn-info" (click)="editDrink(i)" [attr.disabled]="isAdding || null">
+            <ng-container *ngIf="!isEditing(i)">
+              <button type="button" class="btn btn-info" (click)="editDrink(i)" [attr.disabled]="isAdding || editingMode || null">
                 <i class="fa fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-danger" (click)="deleteDrink(drink._id)" [attr.disabled]="isAdding || null">
+              <button type="button" class="btn btn-danger" (click)="deleteDrink(drink._id)" [attr.disabled]="isAdding || editingMode || null">
                 <i class="fa fa-trash"></i>
               </button>
             </ng-container>
-            <ng-container *ngIf="isEditing">
+            <ng-container *ngIf="isEditing(i)">
               <button type="button" class="btn btn-success" (click)="saveEditedDrink(drink._id)">
                 <i class="fa fa-save"></i>
               </button>

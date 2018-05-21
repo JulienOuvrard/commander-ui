@@ -23,7 +23,7 @@
           <th scope="col">Price</th>
           <th scope="col">Updated</th>
           <th scope="col">
-            <button type="button" class="btn btn-success" (click)="addFood()" [attr.disabled]="isAdding || null">
+            <button type="button" class="btn btn-success" (click)="addFood()" [attr.disabled]="isAdding || editingMode || null">
               <i class="fa fa-plus"></i>
             </button>
           </th>
@@ -33,18 +33,18 @@
         <tr *ngFor="let food of foods; let i = index">
           <th scope="row">{{i+1}}</th>
           <td>
-            <ng-container *ngIf="!isEditing">
+            <ng-container *ngIf="!isEditing(i)">
               {{food.name}}
             </ng-container>
-            <ng-container *ngIf="isEditing">
+            <ng-container *ngIf="isEditing(i)">
               <input [(ngModel)]="editFoodBody.name">
             </ng-container>
           </td>
           <td>
-            <ng-container *ngIf="!isEditing">
+            <ng-container *ngIf="!isEditing(i)">
               {{food.price}}
             </ng-container>
-            <ng-container *ngIf="isEditing">
+            <ng-container *ngIf="isEditing(i)">
               <input [(ngModel)]="editFoodBody.price">
             </ng-container>
           </td>
@@ -52,15 +52,15 @@
             {{food.updated | date:'medium':'':'fr'}}
           </td>
           <td>
-            <ng-container *ngIf="!isEditing">
-              <button type="button" class="btn btn-info" (click)="editFood(i)" [attr.disabled]="isAdding || null">
+            <ng-container *ngIf="!isEditing(i)">
+              <button type="button" class="btn btn-info" (click)="editFood(i)" [attr.disabled]="isAdding || editingMode || null">
                 <i class="fa fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-danger" (click)="deleteFood(food._id)" [attr.disabled]="isAdding || null">
+              <button type="button" class="btn btn-danger" (click)="deleteFood(food._id)" [attr.disabled]="isAdding || editingMode || null">
                 <i class="fa fa-trash"></i>
               </button>
             </ng-container>
-            <ng-container *ngIf="isEditing">
+            <ng-container *ngIf="isEditing(i)">
               <button type="button" class="btn btn-success" (click)="saveEditedFood(food._id)">
                 <i class="fa fa-save"></i>
               </button>
