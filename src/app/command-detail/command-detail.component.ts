@@ -33,7 +33,6 @@ export class CommandDetailComponent implements OnInit {
       this.commandBody = {
         name: null,
         price: 0,
-        drinks: [],
         rounds: [],
         meals: [],
         isPaid: false,
@@ -65,12 +64,6 @@ export class CommandDetailComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['commands']);
-  }
-
-  drinkSelection(selection: string) {
-    if (selection !== null) {
-      this.commandBody.drinks.push(selection);
-    }
   }
 
   roundSelection(selection: string) {

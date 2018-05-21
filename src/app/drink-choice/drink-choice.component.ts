@@ -52,7 +52,7 @@ export class DrinkChoiceComponent implements OnInit {
       const drinks = this.selection,
       price = this.price,
       date = new Date();
-      this.drinkService.saveDrinkSelection({drinks, price, created: date, updated: date}).subscribe(res => {
+      this.drinkService.saveDrinkSelection({drinks, price, isPaid: false, created: date, updated: date}).subscribe(res => {
         this.closeSelector();
         this.drinksSelection.emit(res._id);
       });

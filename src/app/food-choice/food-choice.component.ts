@@ -46,7 +46,7 @@ export class FoodChoiceComponent implements OnInit {
       const foods = this.selection,
       price = this.price,
       date = new Date();
-      this.foodService.saveFoodSelection({foods, price, created: date, updated: date}).subscribe(res => {
+      this.foodService.saveFoodSelection({foods, price, isPaid: false, created: date, updated: date}).subscribe(res => {
         this.closeSelector();
         this.foodsSelection.emit(res._id);
       });
