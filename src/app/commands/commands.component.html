@@ -23,7 +23,7 @@
             {{command.name}}
           </td>
           <td>
-            {{command.price}}
+            {{command.price | number:'1.2-3':'fr'}}
           </td>
           <td>
             <input type="checkbox" disabled [attr.checked]="command.isPaid || null"/>

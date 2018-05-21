@@ -16,7 +16,7 @@
         <div class="card bg-light" *ngFor="let food of foods">
             <div class="card-body text-center">
                 <div (click)="foodSelection(food)">
-                    <h5 class="card-title">{{food.name}}
+                    <h5 class="card-title">{{food.name | titlecase}}
                         <span class="badge badge-pill badge-primary" *ngIf="getQuantity(food)">
                             {{getQuantity(food)}}
                         </span>

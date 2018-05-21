@@ -34,7 +34,7 @@
           <th scope="row">{{i+1}}</th>
           <td>
             <ng-container *ngIf="!isEditing(i)">
-              {{drink.name}}
+              {{drink.name | titlecase}}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
               <input [(ngModel)]="editDrinkBody.name">
@@ -42,7 +42,7 @@
           </td>
           <td>
             <ng-container *ngIf="!isEditing(i)">
-              {{drink.price}}
+              {{drink.price | number:'1.2-3':'fr'}}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
               <input [(ngModel)]="editDrinkBody.price">
