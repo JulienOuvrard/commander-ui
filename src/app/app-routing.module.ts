@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { CommandsComponent } from './commands/commands.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CommandDetailComponent } from './command-detail/command-detail.component';
+import { RoundsComponent } from './rounds/rounds.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'meals',
     component: MealsComponent
+  },
+  {
+    path: 'rounds',
+    component: RoundsComponent
   },
   {
     path: 'foods',

@@ -20,6 +20,7 @@ import { FoodChoiceComponent } from './food-choice/food-choice.component';
 import { registerLocaleData } from '@angular/common';
 
 import localefr from '@angular/common/locales/fr';
+import { RoundsComponent } from './rounds/rounds.component';
 registerLocaleData(localefr);
 
 @NgModule({
@@ -33,7 +34,8 @@ registerLocaleData(localefr);
     DashboardComponent,
     CommandDetailComponent,
     DrinkChoiceComponent,
-    FoodChoiceComponent
+    FoodChoiceComponent,
+    RoundsComponent
   ],
   imports: [
     BrowserModule,
