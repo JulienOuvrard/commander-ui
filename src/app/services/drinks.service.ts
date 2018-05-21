@@ -47,4 +47,9 @@ export class DrinksService {
   getRound(roundId: string): Observable<Round> {
     return this.http.get<Round>(`${this.apiRoundUrl}/${roundId}`);
   }
+
+  // usage of any type for body => partial update (TODO modify Round type)
+  updateRound(roundId: string, body: any): Observable<Round> {
+    return this.http.put<Round>(`${this.apiRoundUrl}/${roundId}`, body);
+  }
 }

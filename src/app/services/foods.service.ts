@@ -47,4 +47,9 @@ export class FoodsService {
   getMeal(mealId: string): Observable<Meal> {
     return this.http.get<Meal>(`${this.apiMealUrl}/${mealId}`);
   }
+
+  // usage of any type for body => partial update (TODO modify Meal type)
+  updateMeal(mealId: string, body: any): Observable<Meal> {
+    return this.http.put<Meal>(`${this.apiMealUrl}/${mealId}`, body);
+  }
 }

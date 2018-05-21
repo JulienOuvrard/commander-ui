@@ -94,7 +94,7 @@
                                 <span class="command-price">
                                     <span class="command-price-number">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
                                     <span class="switch switch-sm">
-                                        <input type="checkbox" class="form-control switch" name="{{cmdDetail.id}}_isPaid" id="{{cmdDetail.id}}_isPaid" [(ngModel)]="cmdDetail.paid">
+                                        <input type="checkbox" class="form-control switch" name="{{cmdDetail.id}}_isPaid" id="{{cmdDetail.id}}_isPaid" [ngModel]="cmdDetail.paid" (ngModelChange)="payDetail(cmdDetail, $event)">
                                         <label for="{{cmdDetail.id}}_isPaid"></label>
                                     </span>
                                 </span>
@@ -111,7 +111,7 @@
                                 <span class="command-price">
                                     <span class="command-price-number">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
                                     <span class="switch switch-sm">
-                                        <input type="checkbox" class="form-control switch" name="{{cmdDetail.id}}_isPaid" id="{{cmdDetail.id}}_isPaid" [(ngModel)]="cmdDetail.paid">
+                                        <input type="checkbox" class="form-control switch" name="{{cmdDetail.id}}_isPaid" id="{{cmdDetail.id}}_isPaid" [ngModel]="cmdDetail.paid" (ngModelChange)="payDetail(cmdDetail, $event)">
                                         <label for="{{cmdDetail.id}}_isPaid"></label>
                                     </span>
                                 </span>

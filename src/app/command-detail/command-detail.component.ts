@@ -72,6 +72,27 @@ export class CommandDetailComponent implements OnInit {
     });
   }
 
+  payDetail(detail: CommandDetail, checked: boolean) {
+    detail.paid = checked;
+    if (detail.type === 'round') {
+      this.drinkService.updateRound(detail.id, {isPaid: checked}).subscribe(res => {
+        const det = this.commandDetails.find(cDetail => cDetail.id === res._id);
+        det.paid = checked;
+        this.verifyAllPaid();
+      });
+    } else if (detail.type === 'meal') {
+      this.foodService.updateMeal(detail.id, {isPaid: checked}).subscribe(res => {
+        const det = this.commandDetails.find(cDetail => cDetail.id === res._id);
+        det.paid = checked;
+        this.verifyAllPaid();
+      });
+    }
+  }
+
+  verifyAllPaid() {
+    this.commandBody.isPaid = this.commandDetails.every(detail => detail.paid);
+  }
+
   goBack() {
     this.router.navigate(['commands']);
   }

@@ -16,7 +16,6 @@ export class CommandsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('commands init');
     this.getCommands();
   }
 
