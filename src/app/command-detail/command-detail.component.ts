@@ -86,7 +86,7 @@ export class CommandDetailComponent implements OnInit {
     if (selection !== null) {
       this.foodService.getMeal(selection).subscribe(meal => {
         const detailStr = meal.foods.map(curr => {
-          return curr.name;
+          return `(${curr.quantity}) ${curr.name} ${curr.cooking ? `[${curr.cooking}]` : ``}`;
         }).join(', ');
         this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr});
         this.commandBody.meals.push(selection);
@@ -100,7 +100,7 @@ export class CommandDetailComponent implements OnInit {
     command.meals.forEach(mealId => {
       this.foodService.getMeal(mealId).subscribe(meal => {
         const detailStr = meal.foods.map(curr => {
-          return curr.name;
+          return `(${curr.quantity}) ${curr.name} ${curr.cooking ? `[${curr.cooking}]` : ``}`;
         }).join(', ');
         this.commandDetails.push({id: meal._id, type: 'meal', price: meal.price, paid: meal.isPaid, detail: detailStr});
       });

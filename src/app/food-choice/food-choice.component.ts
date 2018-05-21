@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Food, FoodSelection } from '../models/food.model';
 import { FoodsService } from '../services/foods.service';
+import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 
 @Component({
   selector: 'cmdr-food-choice',
@@ -12,6 +13,23 @@ export class FoodChoiceComponent implements OnInit {
   foods: Food[];
   selection: FoodSelection[];
   price: number;
+  cookings = [{
+    value: 'B',
+    label: 'Bleu'
+  },
+  {
+    value: 'S',
+    label: 'Saignant'
+  },
+  {
+    value: 'AP',
+    label: 'A Point'
+  },
+  {
+    value: 'BC',
+    label: 'Bien Cuit'
+  }];
+  foodCookings: {[s: string]: string};
   @Input() visible: Boolean;
   @Output() visibleChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
@@ -27,26 +45,50 @@ export class FoodChoiceComponent implements OnInit {
       this.foods = foods;
       this.selection = [];
       this.price = 0;
+      this.foodCookings = {};
     });
   }
 
-  getQuantity(food: Food): boolean {
+  getQuantity(food: Food): number {
     const d = this.selection.find(v => v.food === food._id);
 
-    return d !== undefined;
+    return d ? d.quantity : 0;
+  }
+
+  foodCookingSelection(food: Food, cooking: string) {
+    this.foodCookings[food._id] = cooking;
+
+    const d = this.selection.findIndex(v => v.food === food._id);
+    if (d !== -1) {
+      this.selection[d].cooking = this.foodCookings[food._id];
+    }
   }
 
   foodSelection(food: Food) {
-    this.selection.push({ food: food._id, name: food.name });
+    const d = this.selection.findIndex(v => v.food === food._id);
+    if (d !== -1) {
+      this.selection[d].quantity = this.selection[d].quantity + 1;
+    } else {
+      const foodSelectionBody: FoodSelection = {
+        food: food._id,
+        name: food.name,
+        quantity: 1
+      };
+      if (food.needCooking) {
+        this.foodCookings[food._id] = null;
+      }
+      this.selection.push(foodSelectionBody);
+    }
     this.price += food.price;
   }
 
   saveSelection() {
     if (this.selection[0]) {
       const foods = this.selection,
-      price = this.price,
-      date = new Date();
-      this.foodService.saveFoodSelection({foods, price, isPaid: false, created: date, updated: date}).subscribe(res => {
+        price = this.price,
+        date = new Date();
+      this.foodService.saveFoodSelection({ foods, price, isPaid: false, created: date, updated: date }).subscribe(res => {
+        this.resetSelection();
         this.closeSelector();
         this.foodsSelection.emit(res._id);
       });
@@ -69,6 +111,7 @@ export class FoodChoiceComponent implements OnInit {
   resetSelection() {
     this.selection = [];
     this.price = 0;
+    this.foodCookings = {};
   }
 
 }

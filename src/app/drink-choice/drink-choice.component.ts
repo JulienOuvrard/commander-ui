@@ -53,6 +53,7 @@ export class DrinkChoiceComponent implements OnInit {
       price = this.price,
       date = new Date();
       this.drinkService.saveDrinkSelection({drinks, price, isPaid: false, created: date, updated: date}).subscribe(res => {
+        this.resetSelection();
         this.closeSelector();
         this.drinksSelection.emit(res._id);
       });
