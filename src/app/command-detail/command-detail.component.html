@@ -12,11 +12,15 @@
                 </div>
                 <div class="form-group">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" *ngFor="let cmdDetail of commandDetails">
-                            {{cmdDetail.detail}} {{cmdDetail.price | number:'1.2-3':'fr'}}
+                        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetails">
+                            <span class="command-detail">{{cmdDetail.detail}}</span> 
+                            <span class="command-price">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="command-detail">Total</span> 
+                            <span class="command-price">{{commandBody.price | number:'1.2-3':'fr'}}</span>
                         </li>
                     </ul>
-                    <span>Total: {{commandBody.price}}</span>
                 </div>
                 <div class="form-group">
                     <ul class="nav nav-pills">
@@ -69,11 +73,15 @@
 
                 <div class="form-group">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" *ngFor="let cmdDetail of commandDetails">
-                            {{cmdDetail.detail}} {{cmdDetail.price | number:'1.2-3':'fr'}}
+                        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let cmdDetail of commandDetails">
+                            <span class="command-detail">{{cmdDetail.detail}}</span> 
+                            <span class="command-price">{{cmdDetail.price | number:'1.2-3':'fr'}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="command-detail">Total</span> 
+                            <span class="command-price">{{commandBody.price | number:'1.2-3':'fr'}}</span>
                         </li>
                     </ul>
-                    <span>Total: {{commandBody.price}}</span>
                 </div>
 
                 <div class="form-group">
