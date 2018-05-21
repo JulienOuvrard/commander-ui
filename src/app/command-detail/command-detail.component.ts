@@ -55,6 +55,7 @@ export class CommandDetailComponent implements OnInit {
   saveCommand() {
     this.commandsService.saveCommand(this.commandBody).subscribe(res => {
       console.log(res);
+      this.router.navigate(['commands']);
     });
   }
 
@@ -62,6 +63,7 @@ export class CommandDetailComponent implements OnInit {
     this.commandBody.updated = new Date();
     this.commandsService.updateCommand(this.commandId, this.commandBody).subscribe(res => {
       console.log(res);
+      this.router.navigate(['commands']);
     });
   }
 
