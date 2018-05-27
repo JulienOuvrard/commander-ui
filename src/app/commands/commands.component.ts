@@ -40,4 +40,8 @@ export class CommandsComponent implements OnInit {
     });
   }
 
+  printCommand(commandId: string) {
+    console.log('print command', commandId);
+  }
+
 }
