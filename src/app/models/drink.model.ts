@@ -1,5 +1,5 @@
 export interface DrinkSelection {
-    drink: string;
+    drinkId: string;
     name: string;
     quantity: number;
 }

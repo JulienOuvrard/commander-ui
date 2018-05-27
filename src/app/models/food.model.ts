@@ -1,5 +1,5 @@
 export interface FoodSelection {
-    food: string;
+    foodId: string;
     name: string;
     quantity: number;
     cooking?: string;

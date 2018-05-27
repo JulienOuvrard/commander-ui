@@ -32,17 +32,17 @@ export class DrinkChoiceComponent implements OnInit {
   }
 
   getQuantity(drink: Drink): number {
-    const d = this.selection.find(v => v.drink === drink._id);
+    const d = this.selection.find(v => v.drinkId === drink._id);
 
     return d ? d.quantity : 0;
   }
 
   drinkSelection(drink: Drink) {
-    const d = this.selection.findIndex(v => v.drink === drink._id);
+    const d = this.selection.findIndex(v => v.drinkId === drink._id);
     if (d !== -1) {
       this.selection[d].quantity = this.selection[d].quantity.valueOf() + 1;
     } else {
-      this.selection.push({ drink: drink._id, name: drink.name, quantity: 1 });
+      this.selection.push({ drinkId: drink._id, name: drink.name, quantity: 1 });
     }
     this.price += drink.price;
   }

@@ -61,6 +61,8 @@ export class CommandDetailComponent implements OnInit {
     this.commandsService.saveCommand(this.commandBody).subscribe(res => {
       console.log(res);
       this.router.navigate(['commands']);
+    }, err => {
+      console.log(err);
     });
   }
 
@@ -153,5 +155,9 @@ export class CommandDetailComponent implements OnInit {
         this.commandDetailGroupBy['round'].push(detail);
       });
     });
+  }
+
+  printCommand() {
+    console.log('print command', this.commandId);
   }
 }

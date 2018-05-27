@@ -50,7 +50,7 @@ export class FoodChoiceComponent implements OnInit {
   }
 
   getQuantity(food: Food): number {
-    const d = this.selection.find(v => v.food === food._id);
+    const d = this.selection.find(v => v.foodId === food._id);
 
     return d ? d.quantity : 0;
   }
@@ -58,19 +58,19 @@ export class FoodChoiceComponent implements OnInit {
   foodCookingSelection(food: Food, cooking: string) {
     this.foodCookings[food._id] = cooking;
 
-    const d = this.selection.findIndex(v => v.food === food._id);
+    const d = this.selection.findIndex(v => v.foodId === food._id);
     if (d !== -1) {
       this.selection[d].cooking = this.foodCookings[food._id];
     }
   }
 
   foodSelection(food: Food) {
-    const d = this.selection.findIndex(v => v.food === food._id);
+    const d = this.selection.findIndex(v => v.foodId === food._id);
     if (d !== -1) {
       this.selection[d].quantity = this.selection[d].quantity + 1;
     } else {
       const foodSelectionBody: FoodSelection = {
-        food: food._id,
+        foodId: food._id,
         name: food.name,
         quantity: 1
       };
