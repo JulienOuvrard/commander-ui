@@ -19,6 +19,10 @@ export class CommandsService {
     return this.http.get<Command>(`${this.apiUrl}/${commandId}`);
   }
 
+  getCommandDescription(commandId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${commandId}/description`);
+  }
+
   saveCommand(body: Command): Observable<any> {
     return this.http.post(this.apiUrl, body);
   }
