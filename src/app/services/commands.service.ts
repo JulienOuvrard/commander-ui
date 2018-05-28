@@ -30,4 +30,8 @@ export class CommandsService {
   deleteCommand(commandId: string): Observable<Command> {
     return this.http.delete<Command>(`${this.apiUrl}/${commandId}`);
   }
+
+  printCommand(commandId: string, body): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${commandId}/print`, body);
+  }
 }

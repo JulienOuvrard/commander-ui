@@ -158,6 +158,9 @@ export class CommandDetailComponent implements OnInit {
   }
 
   printCommand() {
-    console.log('print command', this.commandId);
+    this.commandsService.printCommand(this.commandId, this.commandDetails).subscribe(res => {
+      const filename = res.filename.split('/').pop();
+      window.open('http://localhost:3000/receipt/' + filename);
+    });
   }
 }
