@@ -1,8 +1,13 @@
 <main>
   <div class="container">
     <h1>Foods Page</h1>
-    <form (ngSubmit)="uploadFoods()" #importFoodForm="ngForm">
-      <div class="input-group mb-3">
+    <div [hidden]="showDetail">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseUploadFood" aria-expanded="false"
+        aria-controls="collapseUploadFood">
+        Upload Data
+      </button>
+      <form (ngSubmit)="uploadFoods()" #importFoodForm="ngForm" id="collapseUploadFood" class="collapse">
+        <div class="input-group mb-3">
           <div class="custom-file">
             <input type="file" class="custom-file-input form-control" ngModel (change)="changeUploadFile($event.target.files)" name="file"
               required accept="*.csv">
@@ -14,8 +19,10 @@
             </button>
           </div>
         </div>
-    </form>
-    <table class="table table-hover">
+      </form>
+    </div>
+    <cmdr-food-detail [hidden]="!showDetail" [food]="detailBody" (foodChange)="detailChange($event)"></cmdr-food-detail>
+    <table class="table table-hover" [hidden]="showDetail">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -33,60 +40,20 @@
         <tr *ngFor="let food of foods; let i = index">
           <th scope="row">{{i+1}}</th>
           <td>
-            <ng-container *ngIf="!isEditing(i)">
-              {{food.name | titlecase}}
-            </ng-container>
-            <ng-container *ngIf="isEditing(i)">
-              <input [(ngModel)]="editFoodBody.name">
-            </ng-container>
+            {{food.name | titlecase}}
           </td>
           <td>
-            <ng-container *ngIf="!isEditing(i)">
-              {{food.price | number:'1.2-3':'fr'}}
-            </ng-container>
-            <ng-container *ngIf="isEditing(i)">
-              <input [(ngModel)]="editFoodBody.price">
-            </ng-container>
+            {{food.price | number:'1.2-3':'fr'}}
           </td>
           <td>
             {{food.updated | date:'medium':'':'fr'}}
           </td>
           <td>
-            <ng-container *ngIf="!isEditing(i)">
-              <button type="button" class="btn btn-info" (click)="editFood(i)" [attr.disabled]="isAdding || editingMode || null">
-                <i class="fa fa-edit"></i>
-              </button>
-              <button type="button" class="btn btn-danger" (click)="deleteFood(food._id)" [attr.disabled]="isAdding || editingMode || null">
-                <i class="fa fa-trash"></i>
-              </button>
-            </ng-container>
-            <ng-container *ngIf="isEditing(i)">
-              <button type="button" class="btn btn-success" (click)="saveEditedFood(food._id)">
-                <i class="fa fa-save"></i>
-              </button>
-              <button type="button" class="btn btn-danger" (click)="cancelEditing()">
-                <i class="fa fa-ban"></i>
-              </button>
-            </ng-container>
-          </td>
-        </tr>
-        <tr *ngIf="isAdding">
-          <th scope="row">{{foods.length+1}}</th>
-          <td>
-            <input [(ngModel)]="newFoodBody.name">
-          </td>
-          <td>
-            <input [(ngModel)]="newFoodBody.price">
-          </td>
-          <td>
-            {{newFoodBody.created | date}}
-          </td>
-          <td>
-            <button type="button" class="btn btn-success" (click)="saveNewFood()">
-              <i class="fa fa-save"></i>
+            <button type="button" class="btn btn-info" (click)="editFood(i)" [attr.disabled]="isAdding || editingMode || null">
+              <i class="fa fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-danger" (click)="cancelAdding()">
-              <i class="fa fa-ban"></i>
+            <button type="button" class="btn btn-danger" (click)="deleteFood(food._id)" [attr.disabled]="isAdding || editingMode || null">
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>

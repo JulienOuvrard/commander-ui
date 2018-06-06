@@ -16,6 +16,8 @@ export class FoodsComponent implements OnInit {
   editFoodBody: Food;
   newFoodBody: Food;
   uploadFile: File;
+  showDetail: boolean;
+  detailBody: Food;
 
   constructor(private foodService: FoodsService) { }
 
@@ -27,21 +29,28 @@ export class FoodsComponent implements OnInit {
     this.foodService.getFoods().subscribe(foods => {
       this.editingMode = false;
       this.isAdding = false;
+      this.showDetail = false;
+      this.editFoodBody = null;
       this.newFoodBody = null;
       this.editingIndex = null;
+      this.detailBody = null;
       this.foods = foods;
     });
   }
 
   addFood() {
     this.isAdding = true;
+    this.showDetail = true;
     const date = new Date();
-    this.newFoodBody = {name: null, price: 0, quantity: 1, needCooking: false, hasIngredients: false, created: date, updated: date};
+    this.newFoodBody = { name: null, price: 0, quantity: 1, needCooking: false, hasIngredients: false, created: date, updated: date };
+    this.detailBody = this.newFoodBody;
   }
 
   cancelAdding() {
     this.isAdding = false;
+    this.showDetail = false;
     this.newFoodBody = null;
+    this.detailBody = this.newFoodBody;
   }
 
   saveNewFood() {
@@ -52,14 +61,18 @@ export class FoodsComponent implements OnInit {
 
   editFood(index: number) {
     this.editingMode = true;
+    this.showDetail = true;
     this.editingIndex = index;
     this.editFoodBody = this.foods[index];
+    this.detailBody = this.editFoodBody;
   }
 
   cancelEditing() {
     this.editingMode = false;
+    this.showDetail = false;
     this.editFoodBody = null;
     this.editingIndex = null;
+    this.detailBody = this.editFoodBody;
   }
 
   isEditing(index: number): boolean {
@@ -90,6 +103,25 @@ export class FoodsComponent implements OnInit {
       this.uploadFile = null;
       this.getFoods();
     });
+  }
+
+  detailChange(food: Food) {
+    if (food === null) {
+      this.isAdding = false;
+      this.editingMode = false;
+      this.showDetail = false;
+      this.editFoodBody = null;
+      this.newFoodBody = null;
+      this.detailBody = null;
+      return;
+    }
+    if (this.editingMode) {
+      this.editFoodBody = food;
+      this.saveEditedFood(food._id);
+    } else if (this.isAdding) {
+      this.newFoodBody = food;
+      this.saveNewFood();
+    }
   }
 
 }

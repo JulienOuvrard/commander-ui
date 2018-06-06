@@ -1,0 +1,33 @@
+<div class="food-detail" *ngIf="!hidden">
+  <h3>Edit food</h3>
+  <form (ngSubmit)="saveFood()" #foodDetailForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="food.name">
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="text" class="form-control" name="quantity" [(ngModel)]="food.quantity">
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="text" class="form-control" name="price" [(ngModel)]="food.price">
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="needCooking" [(ngModel)]="food.needCooking">
+      <label class="form-check-label" for="needCooking">Need Cooking</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="hasIngredients" [(ngModel)]="food.hasIngredients">
+      <label class="form-check-label" for="hasIngredients">Has Ingredients</label>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" [disabled]="!foodDetailForm.form.valid">
+        <i class="fa fa-save"></i>
+      </button>
+      <button type="button" class="btn btn-danger" (click)="cancel()">
+        <i class="fa fa-ban"></i>
+      </button>
+    </div>
+  </form>
+</div>

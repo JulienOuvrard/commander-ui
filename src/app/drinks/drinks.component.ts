@@ -16,6 +16,8 @@ export class DrinksComponent implements OnInit {
   editDrinkBody: Drink;
   newDrinkBody: Drink;
   uploadFile: File;
+  showDetail: boolean;
+  detailBody: Drink;
 
   constructor(private drinkService: DrinksService) { }
 
@@ -27,7 +29,10 @@ export class DrinksComponent implements OnInit {
     this.drinkService.getDrinks().subscribe(drinks => {
       this.editingMode = false;
       this.isAdding = false;
+      this.showDetail = false;
       this.newDrinkBody = null;
+      this.editDrinkBody = null;
+      this.detailBody = null;
       this.editingIndex = null;
       this.drinks = drinks;
     });
@@ -35,13 +40,17 @@ export class DrinksComponent implements OnInit {
 
   addDrink() {
     this.isAdding = true;
+    this.showDetail = true;
     const date = new Date();
     this.newDrinkBody = {name: null, price: 0, quantity: 1, created: date, updated: date};
+    this.detailBody = this.newDrinkBody;
   }
 
   cancelAdding() {
     this.isAdding = false;
+    this.showDetail = false;
     this.newDrinkBody = null;
+    this.detailBody = this.newDrinkBody;
   }
 
   saveNewDrink() {
@@ -52,14 +61,18 @@ export class DrinksComponent implements OnInit {
 
   editDrink(index: number) {
     this.editingMode = true;
+    this.showDetail = true;
     this.editingIndex = index;
     this.editDrinkBody = this.drinks[index];
+    this.detailBody = this.editDrinkBody;
   }
 
   cancelEditing() {
     this.editingMode = false;
+    this.showDetail = false;
     this.editDrinkBody = null;
     this.editingIndex = null;
+    this.detailBody = this.editDrinkBody;
   }
 
   isEditing(index: number): boolean {
@@ -90,6 +103,25 @@ export class DrinksComponent implements OnInit {
       this.uploadFile = null;
       this.getDrinks();
     });
+  }
+
+  detailChange(drink: Drink) {
+    if (drink === null) {
+      this.isAdding = false;
+      this.editingMode = false;
+      this.showDetail = false;
+      this.editDrinkBody = null;
+      this.newDrinkBody = null;
+      this.detailBody = null;
+      return;
+    }
+    if (this.editingMode) {
+      this.editDrinkBody = drink;
+      this.saveEditedDrink(drink._id);
+    } else if (this.isAdding) {
+      this.newDrinkBody = drink;
+      this.saveNewDrink();
+    }
   }
 
 }

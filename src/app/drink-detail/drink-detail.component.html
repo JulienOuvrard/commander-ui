@@ -1,0 +1,25 @@
+<div class="drink-detail" *ngIf="!hidden">
+    <h3>Edit Drink</h3>
+    <form (ngSubmit)="saveDrink()" #drinkDetailForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="drink.name">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="text" class="form-control" name="quantity" [(ngModel)]="drink.quantity">
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="text" class="form-control" name="price" [(ngModel)]="drink.price">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!drinkDetailForm.form.valid">
+          <i class="fa fa-save"></i>
+        </button>
+        <button type="button" class="btn btn-danger" (click)="cancel()">
+          <i class="fa fa-ban"></i>
+        </button>
+      </div>
+    </form>
+  </div>

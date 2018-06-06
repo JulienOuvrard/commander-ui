@@ -1,21 +1,28 @@
 <main>
   <div class="container">
     <h1>Drinks Page</h1>
-    <form (ngSubmit)="uploadDrinks()" #importDrinkForm="ngForm">
-      <div class="input-group mb-3">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input form-control" ngModel (change)="changeUploadFile($event.target.files)" name="file"
-            required accept="*.csv">
-          <label class="custom-file-label" for="file">{{uploadFile? uploadFile.name : 'Choose File'}}</label>
+    <div [hidden]="showDetail">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseUploadDrink" aria-expanded="false"
+        aria-controls="collapseUploadDrink">
+        Upload Data
+      </button>
+      <form (ngSubmit)="uploadDrinks()" #importDrinkForm="ngForm" id="collapseUploadDrink" class="collapse">
+        <div class="input-group mb-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input form-control" ngModel (change)="changeUploadFile($event.target.files)" name="file"
+              required accept="*.csv">
+            <label class="custom-file-label" for="file">{{uploadFile? uploadFile.name : 'Choose File'}}</label>
+          </div>
+          <div class="input-group-append">
+            <button class="btn btn-outline-success" type="submit">
+              <i class="fa fa-upload"></i>
+            </button>
+          </div>
         </div>
-        <div class="input-group-append">
-          <button class="btn btn-outline-success" type="submit">
-            <i class="fa fa-upload"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-    <table class="table table-hover">
+      </form>
+    </div>
+    <cmdr-drink-detail [hidden]="!showDetail" [drink]="detailBody" (drinkChange)="detailChange($event)"></cmdr-drink-detail>
+    <table class="table table-hover" [hidden]="showDetail">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -33,60 +40,20 @@
         <tr *ngFor="let drink of drinks; let i = index">
           <th scope="row">{{i+1}}</th>
           <td>
-            <ng-container *ngIf="!isEditing(i)">
-              {{drink.name | titlecase}}
-            </ng-container>
-            <ng-container *ngIf="isEditing(i)">
-              <input [(ngModel)]="editDrinkBody.name">
-            </ng-container>
+            {{drink.name | titlecase}}
           </td>
           <td>
-            <ng-container *ngIf="!isEditing(i)">
-              {{drink.price | number:'1.2-3':'fr'}}
-            </ng-container>
-            <ng-container *ngIf="isEditing(i)">
-              <input [(ngModel)]="editDrinkBody.price">
-            </ng-container>
+            {{drink.price | number:'1.2-3':'fr'}}
           </td>
           <td>
             {{drink.updated | date:'medium':'':'fr'}}
           </td>
           <td>
-            <ng-container *ngIf="!isEditing(i)">
-              <button type="button" class="btn btn-info" (click)="editDrink(i)" [attr.disabled]="isAdding || editingMode || null">
-                <i class="fa fa-edit"></i>
-              </button>
-              <button type="button" class="btn btn-danger" (click)="deleteDrink(drink._id)" [attr.disabled]="isAdding || editingMode || null">
-                <i class="fa fa-trash"></i>
-              </button>
-            </ng-container>
-            <ng-container *ngIf="isEditing(i)">
-              <button type="button" class="btn btn-success" (click)="saveEditedDrink(drink._id)">
-                <i class="fa fa-save"></i>
-              </button>
-              <button type="button" class="btn btn-danger" (click)="cancelEditing()">
-                <i class="fa fa-ban"></i>
-              </button>
-            </ng-container>
-          </td>
-        </tr>
-        <tr *ngIf="isAdding">
-          <th scope="row">{{drinks.length+1}}</th>
-          <td>
-            <input [(ngModel)]="newDrinkBody.name">
-          </td>
-          <td>
-            <input [(ngModel)]="newDrinkBody.price">
-          </td>
-          <td>
-            {{newDrinkBody.created | date}}
-          </td>
-          <td>
-            <button type="button" class="btn btn-success" (click)="saveNewDrink()">
-              <i class="fa fa-save"></i>
+            <button type="button" class="btn btn-info" (click)="editDrink(i)" [attr.disabled]="isAdding || editingMode || null">
+              <i class="fa fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-danger" (click)="cancelAdding()">
-              <i class="fa fa-ban"></i>
+            <button type="button" class="btn btn-danger" (click)="deleteDrink(drink._id)" [attr.disabled]="isAdding || editingMode || null">
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>
