@@ -13,6 +13,7 @@ export interface Food {
     price: number;
     needCooking: Boolean;
     hasIngredients: Boolean;
+    ingredients?: string[];
     currency?: string;
     created: Date;
     updated?: Date;
