@@ -30,5 +30,15 @@ export class FoodDetailComponent implements OnInit {
     this.foodChange.emit(null);
   }
 
+  addIngredient(ingredient: string) {
+    if (!this.food.ingredients) {
+      this.food.ingredients = [];
+    }
+    this.food.ingredients.push(ingredient);
+  }
+
+  deleteIngredient(i: number) {
+    this.food.ingredients.splice(i, 1);
+  }
 
 }

@@ -21,6 +21,25 @@
       <input class="form-check-input" type="checkbox" name="hasIngredients" [(ngModel)]="food.hasIngredients">
       <label class="form-check-label" for="hasIngredients">Has Ingredients</label>
     </div>
+    <div class="form-group" *ngIf="food.hasIngredients">
+      <label for="ingredient">Ingredients</label>
+      <div class="input-group mb-3">
+          <input type="text" class="form-control" #ingredientInput name="ingredient" placeholder="Add ingredient" aria-label="Ingredient" aria-describedby="ingredient">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="addIngredient(ingredientInput.value)">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      <ul>
+        <li *ngFor="let ingredient of food.ingredients; let i = index" style="display: flex; justify-content: space-around">
+          {{ingredient}}
+          <button class="btn btn-outline-secondary btn-sm" type="button" (click)="deleteIngredient(i)">
+              <i class="fa fa-minus"></i>
+            </button>
+        </li>
+      </ul>
+    </div>
     <div class="form-group">
       <button type="submit" class="btn btn-success" [disabled]="!foodDetailForm.form.valid">
         <i class="fa fa-save"></i>
