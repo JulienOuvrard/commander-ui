@@ -29,7 +29,8 @@ export class FoodChoiceComponent implements OnInit {
     value: 'BC',
     label: 'Bien Cuit'
   }];
-  foodCookings: {[s: string]: string};
+  foodCookings: { [s: string]: string };
+  foodOptions: { [s: string]: string[] };
   @Input() visible: Boolean;
   @Output() visibleChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
@@ -46,6 +47,7 @@ export class FoodChoiceComponent implements OnInit {
       this.selection = [];
       this.price = 0;
       this.foodCookings = {};
+      this.foodOptions = {};
     });
   }
 
@@ -61,6 +63,23 @@ export class FoodChoiceComponent implements OnInit {
     const d = this.selection.findIndex(v => v.foodId === food._id);
     if (d !== -1) {
       this.selection[d].cooking = this.foodCookings[food._id];
+    }
+  }
+
+  foodOptionSelection(food: Food, optionName: string, optionChecked: boolean) {
+    if (!this.foodOptions[food._id]) {
+      this.foodOptions[food._id] = [];
+    }
+    if (optionChecked) {
+      this.foodOptions[food._id].push(optionName);
+    } else {
+      const index = this.foodOptions[food._id].indexOf(optionName);
+      this.foodOptions[food._id].splice(index, 1);
+    }
+    console.log(food.name, this.foodOptions);
+    const d = this.selection.findIndex(v => v.foodId === food._id);
+    if (d !== -1) {
+      this.selection[d].options = this.foodOptions[food._id];
     }
   }
 
@@ -112,6 +131,7 @@ export class FoodChoiceComponent implements OnInit {
     this.selection = [];
     this.price = 0;
     this.foodCookings = {};
+    this.foodOptions = {};
   }
 
 }

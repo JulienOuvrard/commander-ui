@@ -25,14 +25,19 @@
                 </div>
                 <ng-container *ngIf="food.needCooking && getQuantity(food)">
                     <hr>
-                    <!-- <select class="custom-select" name="cooking" id="{{food._id+'_cooking'}}" required [ngModel]="foodCookings[food._id]" (ngModelChange)="foodCookingSelection(food,$event)">
-                        <option [value]="null">Selectioner cuisson</option>
-                        <option *ngFor="let cooking of cookings" [value]="cooking.value">{{cooking.label}}</option>
-                    </select> -->
                     <div class="form-check" *ngFor="let cooking of cookings; let i = index">
                       <input class="form-check-input" type="radio" name="{{food._id+'_cooking'}}" id="{{food._id+'_cooking'+i}}" value="{{cooking.value}}"  [ngModel]="foodCookings[food._id]" (ngModelChange)="foodCookingSelection(food,$event)">
                       <label class="form-check-label" for="{{food._id+'_cooking'+i}}">
                         {{cooking.label}}
+                      </label>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="food.hasIngredients && getQuantity(food)">
+                    <hr>
+                    <div class="form-check" *ngFor="let ingredient of food.ingredients; let i = index">
+                      <input class="form-check-input" type="checkbox" name="{{food._id+'_ingedient'+ingredient}}" id="{{food._id+'_option'+i}}" value="{{ingredient}}"  [ngModel]="foodOptions[food._id]" (ngModelChange)="foodOptionSelection(food,ingredient,$event)">
+                      <label class="form-check-label" for="{{food._id+'_option'+i}}">
+                        {{ingredient}}
                       </label>
                     </div>
                 </ng-container>
