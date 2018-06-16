@@ -35,7 +35,7 @@
                 <ng-container *ngIf="food.hasIngredients && getQuantity(food)">
                     <hr>
                     <div class="form-check" *ngFor="let ingredient of food.ingredients; let i = index">
-                      <input class="form-check-input" type="checkbox" name="{{food._id+'_ingedient'+ingredient}}" id="{{food._id+'_option'+i}}" value="{{ingredient}}"  [ngModel]="foodOptions[food._id]" (ngModelChange)="foodOptionSelection(food,ingredient,$event)">
+                      <input class="form-check-input" type="checkbox" name="{{food._id+'_ingedient'+ingredient}}" id="{{food._id+'_option'+i}}" value="{{ingredient}}"  [ngModel]="foodOptionModel[food._id][ingredient]" (ngModelChange)="foodOptionSelection(food,ingredient,$event)">
                       <label class="form-check-label" for="{{food._id+'_option'+i}}">
                         {{ingredient}}
                       </label>

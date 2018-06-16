@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Food, FoodSelection } from '../models/food.model';
 import { FoodsService } from '../services/foods.service';
-import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 
 @Component({
   selector: 'cmdr-food-choice',
@@ -31,6 +30,7 @@ export class FoodChoiceComponent implements OnInit {
   }];
   foodCookings: { [s: string]: string };
   foodOptions: { [s: string]: string[] };
+  foodOptionModel: { [s: string]: { [s: string]: boolean } };
   @Input() visible: Boolean;
   @Output() visibleChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
@@ -48,6 +48,19 @@ export class FoodChoiceComponent implements OnInit {
       this.price = 0;
       this.foodCookings = {};
       this.foodOptions = {};
+      this.initFoodOptions(foods);
+    });
+  }
+
+  initFoodOptions(foods: Food[]) {
+    this.foodOptionModel = {};
+    foods.forEach(food => {
+      if (food.hasIngredients) {
+        this.foodOptionModel[food._id] = {};
+        food.ingredients.forEach(ingredient => {
+          this.foodOptionModel[food._id][ingredient] = false;
+        });
+      }
     });
   }
 
@@ -66,7 +79,12 @@ export class FoodChoiceComponent implements OnInit {
     }
   }
 
+  setOptionModel(id: string, option: string, checked: boolean) {
+    this.foodOptionModel[id][option] = checked;
+  }
+
   foodOptionSelection(food: Food, optionName: string, optionChecked: boolean) {
+    this.setOptionModel(food._id, optionName, optionChecked);
     if (!this.foodOptions[food._id]) {
       this.foodOptions[food._id] = [];
     }
@@ -76,7 +94,6 @@ export class FoodChoiceComponent implements OnInit {
       const index = this.foodOptions[food._id].indexOf(optionName);
       this.foodOptions[food._id].splice(index, 1);
     }
-    console.log(food.name, this.foodOptions);
     const d = this.selection.findIndex(v => v.foodId === food._id);
     if (d !== -1) {
       this.selection[d].options = this.foodOptions[food._id];
@@ -132,6 +149,11 @@ export class FoodChoiceComponent implements OnInit {
     this.price = 0;
     this.foodCookings = {};
     this.foodOptions = {};
+    Object.keys(this.foodOptionModel).forEach(foodOpt => {
+      Object.keys(this.foodOptionModel[foodOpt]).forEach(opt => {
+        this.foodOptionModel[foodOpt][opt] = false;
+      });
+    });
   }
 
 }
