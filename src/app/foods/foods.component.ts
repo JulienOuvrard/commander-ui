@@ -42,7 +42,16 @@ export class FoodsComponent implements OnInit {
     this.isAdding = true;
     this.showDetail = true;
     const date = new Date();
-    this.newFoodBody = { name: null, price: 0, quantity: 1, needCooking: false, hasIngredients: false, created: date, updated: date };
+    this.newFoodBody = {
+      name: null,
+      category: null,
+      price: 0,
+      quantity: 1,
+      needCooking: false,
+      hasIngredients: false,
+      created: date,
+      updated: date
+    };
     this.detailBody = this.newFoodBody;
   }
 

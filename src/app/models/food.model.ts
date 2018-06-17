@@ -9,6 +9,7 @@ export interface FoodSelection {
 export interface Food {
     _id?: string;
     name: string;
+    category: string;
     quantity: number;
     price: number;
     needCooking: Boolean;

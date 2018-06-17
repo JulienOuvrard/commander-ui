@@ -42,7 +42,7 @@ export class DrinksComponent implements OnInit {
     this.isAdding = true;
     this.showDetail = true;
     const date = new Date();
-    this.newDrinkBody = {name: null, price: 0, quantity: 1, created: date, updated: date};
+    this.newDrinkBody = {name: null, category: null, price: 0, quantity: 1, created: date, updated: date};
     this.detailBody = this.newDrinkBody;
   }
 

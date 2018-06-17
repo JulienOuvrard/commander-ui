@@ -7,6 +7,7 @@ export interface DrinkSelection {
 export interface Drink {
     _id?: string;
     name: string;
+    category: string;
     quantity: number;
     price: number;
     currency?: string;
