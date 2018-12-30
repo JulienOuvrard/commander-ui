@@ -23,6 +23,9 @@ import localefr from '@angular/common/locales/fr';
 import { RoundsComponent } from './rounds/rounds.component';
 import { FoodDetailComponent } from './food-detail/food-detail.component';
 import { DrinkDetailComponent } from './drink-detail/drink-detail.component';
+import { MealsService } from './services/meals.service';
+import { RoundsService } from './services/rounds.service';
+
 registerLocaleData(localefr);
 
 @NgModule({
@@ -47,7 +50,7 @@ registerLocaleData(localefr);
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [DrinksService, FoodsService, CommandsService],
+  providers: [DrinksService, FoodsService, CommandsService, MealsService, RoundsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

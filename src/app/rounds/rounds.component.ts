@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Round } from '../models/round.model';
+import { RoundsService } from '../services/rounds.service';
 
 @Component({
   selector: 'cmdr-rounds',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoundsComponent implements OnInit {
 
-  constructor() { }
+  rounds: Round[];
+  constructor(private RoundService: RoundsService) { }
 
   ngOnInit() {
+    this.getRounds();
   }
+  getRounds() {
+    this.RoundService.getRounds().subscribe(rounds => {
+      this.rounds = rounds;
+    });
+  }
+  editRound(roundId: string) {
 
+  }
+  deleteRound(roundId: string) {
+
+  }
 }

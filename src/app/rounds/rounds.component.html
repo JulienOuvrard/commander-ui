@@ -1,5 +1,42 @@
 <main>
-  <p>
-    rounds works!
-  </p>
+    <div class="container">
+        <h1>Rounds Page</h1>
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Price</th>
+              <th scope="col">IsPaid</th>
+              <th scope="col">Updated</th>
+              <th scope="col">
+                <button type="button" class="btn btn-success" (click)="addRound()" [attr.disabled]="isAdding || null">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let round of rounds; let i = index">
+              <td scope="row">{{i+1}}</td>
+              <td>
+                {{round.price | number:'1.2-3':'fr'}}
+              </td>
+              <td [ngClass]="{'bg-success': round.isPaid, 'bg-danger': !round.isPaid}">
+                <input type="checkbox" disabled [hidden]="true" [attr.checked]="round.isPaid || null"/>
+              </td>
+              <td>
+                {{round.updated | date:'medium':'':'fr'}}
+              </td>
+              <td>
+                <button type="button" class="btn btn-info" (click)="editRound(round._id)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="deleteRound(round._id)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 </main>

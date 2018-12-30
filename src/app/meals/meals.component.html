@@ -1,5 +1,42 @@
 <main>
-  <p>
-    meals works!
-  </p>
+    <div class="container">
+        <h1>Meals Page</h1>
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Price</th>
+              <th scope="col">IsPaid</th>
+              <th scope="col">Updated</th>
+              <th scope="col">
+                <button type="button" class="btn btn-success" (click)="addMeal()" [attr.disabled]="isAdding || null">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let meal of meals; let i = index">
+              <td scope="row">{{i+1}}</td>
+              <td>
+                {{meal.price | number:'1.2-3':'fr'}}
+              </td>
+              <td [ngClass]="{'bg-success': meal.isPaid, 'bg-danger': !meal.isPaid}">
+                <input type="checkbox" disabled [hidden]="true" [attr.checked]="meal.isPaid || null"/>
+              </td>
+              <td>
+                {{meal.updated | date:'medium':'':'fr'}}
+              </td>
+              <td>
+                <button type="button" class="btn btn-info" (click)="editMeal(meal._id)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="deleteMeal(meal._id)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 </main>
