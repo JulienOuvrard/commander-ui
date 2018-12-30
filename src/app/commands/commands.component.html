@@ -18,15 +18,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let command of commands; let i = index">
-          <th scope="row">{{i+1}}</th>
+          <td scope="row">{{i+1}}</td>
           <td>
             {{command.name}}
           </td>
           <td>
             {{command.price | number:'1.2-3':'fr'}}
           </td>
-          <td>
-            <input type="checkbox" disabled [attr.checked]="command.isPaid || null"/>
+          <td [ngClass]="{'bg-success': command.isPaid, 'bg-danger': !command.isPaid}">
+            <input type="checkbox" disabled [hidden]="true" [attr.checked]="command.isPaid || null"/>
           </td>
           <td>
             {{command.updated | date:'medium':'':'fr'}}
