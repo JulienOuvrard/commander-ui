@@ -1,47 +1,58 @@
 <div class="container" [hidden]="!visible">
-    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Foods toolbar">
-        <div class="btn-group" role="group" aria-label="Actions">
-            <button type="button" class="btn btn-secondary" (click)="saveSelection()">Ok</button>
-            <button type="button" class="btn btn-secondary" (click)="resetSelection()">Reset</button>
-            <button type="button" class="btn btn-secondary" (click)="cancelSelection()">Cancel</button>
-        </div>
-        <div class="input-group">
-            <input type="text" readonly class="form-control" aria-label="food price" aria-describedby="btnGroupAddon2" value="{{price | number:'1.2-3':'fr'}}">
-            <div class="input-group-append">
-                <span class="input-group-text" id="btnGroupAddon2">€</span>
-            </div>
-        </div>
+  <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Foods toolbar">
+    <div class="btn-group" role="group" aria-label="Actions">
+      <button type="button" class="btn btn-secondary" (click)="saveSelection()">Ok</button>
+      <button type="button" class="btn btn-secondary" (click)="resetSelection()">Reset</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelSelection()">Cancel</button>
     </div>
-    <div class="card-columns">
-        <div class="card bg-light" *ngFor="let food of foods">
+    <div class="input-group">
+      <input type="text" readonly class="form-control" aria-label="food price" aria-describedby="btnGroupAddon2" value="{{price | number:'1.2-3':'fr'}}">
+      <div class="input-group-append">
+        <span class="input-group-text" id="btnGroupAddon2">€</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card" *ngFor="let category of categories">
+      <div class="card-header" (click)="toggleList($event, category)">
+        {{category | uppercase}}
+      </div>
+      <div class="card-body card-columns" [hidden]="foodHidden[category]">
+        <ng-container *ngFor="let food of foodByCategory[category]">
+          <div class="card bg-light">
             <div class="card-body text-center">
-                <div (click)="foodSelection(food)">
-                    <h5 class="card-title">{{food.name | titlecase}}
-                        <span class="badge badge-pill badge-primary" *ngIf="getQuantity(food)">
-                            {{getQuantity(food)}}
-                        </span>
-                    </h5>
-                    <p class="card-text">{{food.price | currency:food.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
+              <div (click)="foodSelection(food)">
+                <h5 class="card-title">{{food.name | titlecase}}
+                  <span class="badge badge-pill badge-primary" *ngIf="getQuantity(food)">
+                    {{getQuantity(food)}}
+                  </span>
+                </h5>
+                <p class="card-text">{{food.price | currency:food.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
+              </div>
+              <ng-container *ngIf="food.needCooking && getQuantity(food)">
+                <hr>
+                <div class="form-check" *ngFor="let cooking of cookings; let i = index">
+                  <input class="form-check-input" type="radio" name="{{food._id+'_cooking'}}" id="{{food._id+'_cooking'+i}}"
+                    value="{{cooking.value}}" [ngModel]="foodCookings[food._id]" (ngModelChange)="foodCookingSelection(food,$event)">
+                  <label class="form-check-label" for="{{food._id+'_cooking'+i}}">
+                    {{cooking.label}}
+                  </label>
                 </div>
-                <ng-container *ngIf="food.needCooking && getQuantity(food)">
-                    <hr>
-                    <div class="form-check" *ngFor="let cooking of cookings; let i = index">
-                      <input class="form-check-input" type="radio" name="{{food._id+'_cooking'}}" id="{{food._id+'_cooking'+i}}" value="{{cooking.value}}"  [ngModel]="foodCookings[food._id]" (ngModelChange)="foodCookingSelection(food,$event)">
-                      <label class="form-check-label" for="{{food._id+'_cooking'+i}}">
-                        {{cooking.label}}
-                      </label>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="food.hasIngredients && getQuantity(food)">
-                    <hr>
-                    <div class="form-check" *ngFor="let ingredient of food.ingredients; let i = index">
-                      <input class="form-check-input" type="checkbox" name="{{food._id+'_ingedient'+ingredient}}" id="{{food._id+'_option'+i}}" value="{{ingredient}}"  [ngModel]="foodOptionModel[food._id][ingredient]" (ngModelChange)="foodOptionSelection(food,ingredient,$event)">
-                      <label class="form-check-label" for="{{food._id+'_option'+i}}">
-                        {{ingredient}}
-                      </label>
-                    </div>
-                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="food.hasIngredients && getQuantity(food)">
+                <hr>
+                <div class="form-check" *ngFor="let ingredient of food.ingredients; let i = index">
+                  <input class="form-check-input" type="checkbox" name="{{food._id+'_ingedient'+ingredient}}" id="{{food._id+'_option'+i}}"
+                    value="{{ingredient}}" [ngModel]="foodOptionModel[food._id][ingredient]" (ngModelChange)="foodOptionSelection(food,ingredient,$event)">
+                  <label class="form-check-label" for="{{food._id+'_option'+i}}">
+                    {{ingredient}}
+                  </label>
+                </div>
+              </ng-container>
             </div>
-        </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
+  </div>
 </div>

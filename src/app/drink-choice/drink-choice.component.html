@@ -13,14 +13,21 @@
             </div>
         </div>
     </div>
-    <div class="card-columns">
-        <div class="card bg-light" *ngFor="let drink of drinks" (click)="drinkSelection(drink)">
-            <div class="card-body text-center">
-                <h5 class="card-title">{{drink.name | titlecase}}
-                    <span class="badge badge-pill badge-primary" *ngIf="getQuantity(drink)">{{getQuantity(drink)}}</span>
-                </h5>
-                <p class="card-text">{{drink.price | currency:drink.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
+    <div class="card" *ngFor="let category of categories">
+        <div class="card-header" (click)="toggleList($event, category)">
+          {{category | uppercase}}
+        </div>
+        <div class="card-body card-columns" [hidden]="drinkHidden[category]">
+          <ng-container *ngFor="let drink of drinkByCategory[category]">
+            <div class="card bg-light" (click)="drinkSelection(drink)">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{drink.name | titlecase}}
+                        <span class="badge badge-pill badge-primary" *ngIf="getQuantity(drink)">{{getQuantity(drink)}}</span>
+                    </h5>
+                    <p class="card-text">{{drink.price | currency:drink.currency:'symbol-narrow':'1.2-3':'fr'}}</p>
+                </div>
             </div>
+          </ng-container>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Food, FoodSelection } from '../models/food.model';
 import { FoodsService } from '../services/foods.service';
+import { groupBy } from '../utils';
 
 @Component({
   selector: 'cmdr-food-choice',
@@ -10,6 +11,7 @@ import { FoodsService } from '../services/foods.service';
 export class FoodChoiceComponent implements OnInit {
 
   foods: Food[];
+  categories: string[];
   selection: FoodSelection[];
   price: number;
   cookings = [{
@@ -31,6 +33,8 @@ export class FoodChoiceComponent implements OnInit {
   foodCookings: { [s: string]: string };
   foodOptions: { [s: string]: string[] };
   foodOptionModel: { [s: string]: { [s: string]: boolean } };
+  foodByCategory: {[s: string]: Food[]};
+  foodHidden: { [s: string]: boolean };
   @Input() visible: Boolean;
   @Output() visibleChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
@@ -44,6 +48,12 @@ export class FoodChoiceComponent implements OnInit {
   getFoods() {
     this.foodService.getFoods().subscribe(foods => {
       this.foods = foods;
+      this.foodByCategory = this.groupByCategory(this.foods);
+      this.categories = Object.keys(this.foodByCategory);
+      this.foodHidden = {};
+      this.categories.forEach(cat => {
+        this.foodHidden[cat] = true;
+      });
       this.selection = [];
       this.price = 0;
       this.foodCookings = {};
@@ -62,6 +72,15 @@ export class FoodChoiceComponent implements OnInit {
         });
       }
     });
+  }
+
+  groupByCategory(items) {
+    return groupBy(items, 'category');
+  }
+
+  toggleList(event, category) {
+    event.preventDefault();
+    this.foodHidden[category] = !this.foodHidden[category];
   }
 
   getQuantity(food: Food): number {

@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { DrinksService } from '../services/drinks.service';
 import { Drink, DrinkSelection } from '../models/drink.model';
+import { groupBy } from '../utils';
 
 @Component({
   selector: 'cmdr-drink-choice',
@@ -10,8 +11,11 @@ import { Drink, DrinkSelection } from '../models/drink.model';
 export class DrinkChoiceComponent implements OnInit {
 
   drinks: Drink[];
+  categories: string[];
   selection: DrinkSelection[];
   price: number;
+  drinkByCategory: {[s: string]: Drink[]};
+  drinkHidden: { [s: string]: boolean };
   @Input() visible: Boolean;
   @Output() visibleChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
@@ -26,9 +30,24 @@ export class DrinkChoiceComponent implements OnInit {
   getDrinks() {
     this.drinkService.getDrinks().subscribe(drinks => {
       this.drinks = drinks;
+      this.drinkByCategory = this.groupByCategory(this.drinks);
+      this.categories = Object.keys(this.drinkByCategory);
+      this.drinkHidden = {};
+      this.categories.forEach(cat => {
+        this.drinkHidden[cat] = true;
+      });
       this.selection = [];
       this.price = 0;
     });
+  }
+
+  groupByCategory(items) {
+    return groupBy(items, 'category');
+  }
+
+  toggleList(event, category) {
+    event.preventDefault();
+    this.drinkHidden[category] = !this.drinkHidden[category];
   }
 
   getQuantity(drink: Drink): number {
