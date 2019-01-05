@@ -25,6 +25,7 @@ import { FoodDetailComponent } from './food-detail/food-detail.component';
 import { DrinkDetailComponent } from './drink-detail/drink-detail.component';
 import { MealsService } from './services/meals.service';
 import { RoundsService } from './services/rounds.service';
+import { DashboardService } from './services/dashboard.service';
 
 registerLocaleData(localefr);
 
@@ -50,7 +51,7 @@ registerLocaleData(localefr);
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [DrinksService, FoodsService, CommandsService, MealsService, RoundsService],
+  providers: [DrinksService, FoodsService, CommandsService, MealsService, RoundsService, DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
