@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Drink } from '../models/drink.model';
 import { Round } from '../models/round.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DrinksService {
-  private apiUrl = 'http://localhost:3000/api/drinks';
-  private apiRoundUrl = 'http://localhost:3000/api/rounds';
+  private apiUrl = `${environment.apiRoot}/api/drinks`;
+  private apiRoundUrl = `${environment.apiRoot}/api/rounds`;
 
   constructor(private http: HttpClient) { }
 

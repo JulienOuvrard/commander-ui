@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Command } from '../models/command.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommandsService {
-  private apiUrl = 'http://localhost:3000/api/commands';
+  private apiUrl = `${environment.apiRoot}/api/commands`;
 
   constructor(private http: HttpClient) { }
 
