@@ -14,3 +14,8 @@ export interface Drink {
     created: Date;
     updated?: Date;
 }
+
+export interface DrinkGroupBy {
+  _id: string;
+  drinks: Drink[];
+}

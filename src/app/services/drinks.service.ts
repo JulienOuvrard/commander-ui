@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Drink } from '../models/drink.model';
+import { Drink, DrinkGroupBy } from '../models/drink.model';
 import { Round } from '../models/round.model';
 import { environment } from '../../environments/environment';
 
@@ -20,6 +20,23 @@ export class DrinksService {
 
   getDrink(drinkId: string): Observable<Drink> {
     return this.http.get<Drink>(`${this.apiUrl}/${drinkId}`);
+  }
+
+  getDrinkCategories(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/categories`);
+  }
+
+  getDrinksByCategories(): Observable<DrinkGroupBy[]> {
+    return this.http.get<DrinkGroupBy[]>(`${this.apiUrl}/groupBy/category`);
+  }
+
+  exportDrinks() {
+    this.http.get(`${this.apiUrl}/export`, {headers: {'content-type': 'text/csv'}}).subscribe((data: any) => {
+      console.log(data);
+      const blob = new Blob([data], {type: 'text/csv'});
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
+    });
   }
 
   saveDrink(body: Drink): Observable<any> {

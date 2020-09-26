@@ -1,7 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { DrinksService } from '../services/drinks.service';
-import { Drink, DrinkSelection } from '../models/drink.model';
+import { Drink, DrinkSelection, DrinkGroupBy } from '../models/drink.model';
 import { groupBy } from '../utils';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'cmdr-drink-choice',
@@ -24,14 +25,35 @@ export class DrinkChoiceComponent implements OnInit {
   constructor(private drinkService: DrinksService) { }
 
   ngOnInit() {
-    this.getDrinks();
+    this.initDrinks();
+  }
+
+  initDrinks() {
+    forkJoin([this.drinkService.getDrinkCategories(), this.drinkService.getDrinks(), this.drinkService.getDrinksByCategories()]).subscribe(
+      ([categories, drinks, groupByCategory]) => {
+      this.categories = categories;
+      this.drinkHidden = {};
+      this.categories.forEach(cat => {
+        this.drinkHidden[cat] = true;
+      });
+      this.selection = [];
+      this.price = 0;
+
+      this.drinks = drinks;
+
+      this.drinkByCategory = this.reduceCategories(groupByCategory);
+    });
   }
 
   getDrinks() {
     this.drinkService.getDrinks().subscribe(drinks => {
       this.drinks = drinks;
-      this.drinkByCategory = this.groupByCategory(this.drinks);
-      this.categories = Object.keys(this.drinkByCategory);
+    });
+  }
+
+  getDrinkCategories() {
+    this.drinkService.getDrinkCategories().subscribe(categories => {
+      this.categories = categories;
       this.drinkHidden = {};
       this.categories.forEach(cat => {
         this.drinkHidden[cat] = true;
@@ -41,8 +63,21 @@ export class DrinkChoiceComponent implements OnInit {
     });
   }
 
+  getDrinksByCategories() {
+    this.drinkService.getDrinksByCategories().subscribe(groupByCategory => {
+      this.drinkByCategory = this.reduceCategories(groupByCategory);
+    });
+  }
+
   groupByCategory(items) {
     return groupBy(items, 'category');
+  }
+
+  reduceCategories(groups: DrinkGroupBy[]) {
+    return groups.reduce((acc, drinkGroup) => {
+      acc[drinkGroup._id] = drinkGroup.drinks;
+      return acc;
+    }, {});
   }
 
   toggleList(event, category) {

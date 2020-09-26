@@ -20,6 +20,9 @@
           </div>
         </div>
       </form>
+      <button class="btn btn-primary" type="button" (click)="exportDrinks()">
+        Export Data
+      </button>
     </div>
     <cmdr-drink-detail [hidden]="!showDetail" [drink]="detailBody" (drinkChange)="detailChange($event)"></cmdr-drink-detail>
     <table class="table table-hover" [hidden]="showDetail">

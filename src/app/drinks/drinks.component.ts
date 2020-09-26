@@ -124,4 +124,8 @@ export class DrinksComponent implements OnInit {
     }
   }
 
+  exportDrinks() {
+    this.drinkService.exportDrinks();
+  }
+
 }
