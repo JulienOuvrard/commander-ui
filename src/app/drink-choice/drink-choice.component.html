@@ -20,7 +20,10 @@
         <div class="card-body card-columns" [hidden]="drinkHidden[category]">
           <ng-container *ngFor="let drink of drinkByCategory[category]">
             <div class="card bg-light" (click)="drinkSelection(drink)">
-                <div class="card-body text-center">
+                <div class="card-header text-right pb-0 pt-0 bg-transparent border-bottom-0" *ngIf="getQuantity(drink)">
+                  <span (click)="drinkDeselection(drink, $event)"><i class="fa fa-trash"></i></span>
+                </div>
+                <div class="card-body text-center" [ngClass]="{'pt-0': getQuantity(drink)}">
                     <h5 class="card-title">{{drink.name | titlecase}}
                         <span class="badge badge-pill badge-primary" *ngIf="getQuantity(drink)">{{getQuantity(drink)}}</span>
                     </h5>

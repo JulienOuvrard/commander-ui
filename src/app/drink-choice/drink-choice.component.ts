@@ -101,6 +101,16 @@ export class DrinkChoiceComponent implements OnInit {
     this.price += drink.price;
   }
 
+  drinkDeselection(drink: Drink, event: MouseEvent) {
+    event.stopImmediatePropagation();
+    const d = this.selection.findIndex(v => v.drinkId === drink._id);
+    if (d !== -1) {
+      this.selection[d].quantity = this.selection[d].quantity.valueOf() - 1;
+      this.price -= drink.price;
+    }
+    this.selection = this.selection.filter(sel => sel.quantity !== 0);
+  }
+
   saveSelection() {
     if (this.selection[0]) {
       const drinks = this.selection,
