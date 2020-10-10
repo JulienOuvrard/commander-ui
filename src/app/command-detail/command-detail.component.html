@@ -133,7 +133,7 @@
                             <span class="command-price">
                                 <span class="command-price-number">{{commandBody.price | number:'1.2-3':'fr'}}</span>
                                 <span class="switch switch-sm">
-                                    <input type="checkbox" class="form-control switch" name="isPaid" id="isPaid" [(ngModel)]="commandBody.isPaid">
+                                    <input type="checkbox" class="form-control switch" name="isPaid" id="isPaid" [ngModel]="commandBody.isPaid" (ngModelChange)="payCommand($event)">
                                     <label for="isPaid"></label>
                                 </span>
                             </span>

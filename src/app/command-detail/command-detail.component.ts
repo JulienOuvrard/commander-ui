@@ -59,7 +59,7 @@ export class CommandDetailComponent implements OnInit {
 
   saveCommand() {
     this.commandsService.saveCommand(this.commandBody).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.router.navigate(['commands']);
     }, err => {
       console.log(err);
@@ -89,6 +89,24 @@ export class CommandDetailComponent implements OnInit {
         this.verifyAllPaid();
       });
     }
+  }
+
+  payCommand(checked: boolean) {
+    this.commandBody.isPaid = checked;
+    this.payAllDetails(checked);
+  }
+
+  payAllDetails(checked: boolean) {
+    this.commandDetails.forEach(detail => {
+      detail.paid = checked;
+      if (detail.type === 'round') {
+        this.drinkService.updateRound(detail.id, {isPaid: checked}).subscribe(res => {
+        });
+      } else if (detail.type === 'meal') {
+        this.foodService.updateMeal(detail.id, {isPaid: checked}).subscribe(res => {
+        });
+      }
+    });
   }
 
   verifyAllPaid() {
