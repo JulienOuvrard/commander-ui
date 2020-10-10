@@ -19,3 +19,8 @@ export interface Food {
     created: Date;
     updated?: Date;
 }
+
+export interface FoodGroupBy {
+  _id: string;
+  drinks: Food[];
+}
