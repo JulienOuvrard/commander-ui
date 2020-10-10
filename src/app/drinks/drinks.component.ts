@@ -18,6 +18,7 @@ export class DrinksComponent implements OnInit {
   uploadFile: File;
   showDetail: boolean;
   detailBody: Drink;
+  drinkCategories: string[];
 
   constructor(private drinkService: DrinksService) { }
 
@@ -39,11 +40,15 @@ export class DrinksComponent implements OnInit {
   }
 
   addDrink() {
-    this.isAdding = true;
-    this.showDetail = true;
-    const date = new Date();
-    this.newDrinkBody = {name: null, category: null, price: 0, quantity: 1, created: date, updated: date};
-    this.detailBody = this.newDrinkBody;
+    this.drinkService.getDrinkCategories().subscribe(categories => {
+      this.drinkCategories = categories;
+      this.isAdding = true;
+      this.showDetail = true;
+      const date = new Date();
+      this.newDrinkBody = {name: null, category: null, price: 0, quantity: 1, created: date, updated: date};
+      this.detailBody = this.newDrinkBody;
+    });
+
   }
 
   cancelAdding() {

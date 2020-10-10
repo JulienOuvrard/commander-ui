@@ -18,6 +18,7 @@ export class FoodsComponent implements OnInit {
   uploadFile: File;
   showDetail: boolean;
   detailBody: Food;
+  foodCategories: string[];
 
   constructor(private foodService: FoodsService) { }
 
@@ -39,20 +40,23 @@ export class FoodsComponent implements OnInit {
   }
 
   addFood() {
-    this.isAdding = true;
-    this.showDetail = true;
-    const date = new Date();
-    this.newFoodBody = {
-      name: null,
-      category: null,
-      price: 0,
-      quantity: 1,
-      needCooking: false,
-      hasIngredients: false,
-      created: date,
-      updated: date
-    };
-    this.detailBody = this.newFoodBody;
+    this.foodService.getFoodCategories().subscribe(categories => {
+      this.foodCategories = categories;
+      this.isAdding = true;
+      this.showDetail = true;
+      const date = new Date();
+      this.newFoodBody = {
+        name: null,
+        category: null,
+        price: 0,
+        quantity: 1,
+        needCooking: false,
+        hasIngredients: false,
+        created: date,
+        updated: date
+      };
+      this.detailBody = this.newFoodBody;
+    });
   }
 
   cancelAdding() {

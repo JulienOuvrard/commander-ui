@@ -10,6 +10,7 @@ export class DrinkDetailComponent implements OnInit {
 
   @Input() hidden: boolean;
   @Input() drink: Drink;
+  @Input() categories: string[];
   @Output() drinkChange: EventEmitter<Drink>;
 
   constructor() {
