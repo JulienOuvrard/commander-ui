@@ -9,6 +9,7 @@ import { RoundsService } from '../services/rounds.service';
 })
 export class RoundsComponent implements OnInit {
 
+  isAdding: boolean;
   rounds: Round[];
   constructor(private RoundService: RoundsService) { }
 
@@ -19,6 +20,9 @@ export class RoundsComponent implements OnInit {
     this.RoundService.getRounds().subscribe(rounds => {
       this.rounds = rounds;
     });
+  }
+  addRound() {
+
   }
   editRound(roundId: string) {
 

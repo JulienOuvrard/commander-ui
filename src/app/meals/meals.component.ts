@@ -9,6 +9,7 @@ import { MealsService } from '../services/meals.service';
 })
 export class MealsComponent implements OnInit {
 
+  isAdding: boolean;
   meals: Meal[];
   constructor(private MealService: MealsService) { }
 
@@ -19,6 +20,9 @@ export class MealsComponent implements OnInit {
     this.MealService.getMeals().subscribe(meals => {
       this.meals = meals;
     });
+  }
+  addMeal() {
+
   }
   editMeal(mealId: string) {
 

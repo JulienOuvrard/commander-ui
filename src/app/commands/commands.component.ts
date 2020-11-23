@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CommandsComponent implements OnInit {
 
+  isAdding: boolean;
   commands: Command[];
 
   constructor(private CommandService: CommandsService, private router: Router, public route: ActivatedRoute) {
